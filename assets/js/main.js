@@ -12,9 +12,9 @@ const NAV = [
 const LOGO = `
 <svg class="brand-mark" viewBox="0 0 32 32" fill="none" aria-hidden="true">
   <path d="M16 2c4 3.5 6 8 6 13.5V22h-12v-6.5C10 10 12 5.5 16 2z" fill="#e7ecf3"/>
-  <circle cx="16" cy="13" r="2.6" fill="#e3262f"/>
-  <path d="M10 18l-4 5v2h4zM22 18l4 5v2h-4z" fill="#e3262f"/>
-  <path d="M13 23h6l-1 4c-.6 1.6-2 3-2 3s-1.4-1.4-2-3z" fill="#ff7a3d"/>
+  <circle cx="16" cy="13" r="2.6" fill="#cc0000"/>
+  <path d="M10 18l-4 5v2h4zM22 18l4 5v2h-4z" fill="#cc0000"/>
+  <path d="M13 23h6l-1 4c-.6 1.6-2 3-2 3s-1.4-1.4-2-3z" fill="#b5b8c0"/>
 </svg>`;
 
 function currentPage() {
@@ -33,8 +33,8 @@ function renderHeader() {
   el.innerHTML = `
     <nav class="container nav">
       <a class="brand" href="index.html">${LOGO}<b>METU<span>SAR</span></b></a>
-      <button class="nav-toggle" aria-label="Menüyü aç" aria-expanded="false">☰</button>
-      <ul class="nav-links">${links}</ul>
+      <button class="nav-toggle" aria-controls="main-navigation" aria-label="Menüyü aç" aria-expanded="false">☰</button>
+      <ul class="nav-links" id="main-navigation">${links}</ul>
     </nav>`;
   const btn = el.querySelector(".nav-toggle");
   const ul = el.querySelector(".nav-links");
