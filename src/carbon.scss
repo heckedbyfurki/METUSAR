@@ -1,0 +1,15 @@
+@use '@carbon/styles/scss/config' with ($font-path: '../fonts');
+@use '@carbon/styles/scss/theme' with (
+  $theme: (
+    interactive: #cc0000,
+    button-primary: #cc0000,
+    button-primary-hover: #a80000,
+    button-primary-active: #850000,
+    link-primary: #a80000,
+    link-primary-hover: #850000,
+    focus: #cc0000
+  )
+);
+@use '@carbon/styles/scss/components/button';
+@use '@carbon/styles/scss/components/text-input';
+@use '@carbon/styles/scss/components/tag';

@@ -3,80 +3,81 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="theme-color" content="#101114">
   <title>METUSAR — ODTÜ Roket Takımı</title>
-  <meta name="description" content="ODTÜ'de tasarlıyor, üretiyor ve uçuruyoruz. METUSAR roket takımının projelerini, mühendislik çalışmalarını ve eğitim kaynaklarını keşfedin.">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700;800&family=Geist+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <meta name="description" content="METUSAR, Orta Doğu Teknik Üniversitesi'nin roket takımı. Yarışmalarımız, hedeflerimiz ve eğitim kaynaklarımız.">
+  <link rel="stylesheet" href="assets/css/fonts.css">
+  <link rel="stylesheet" href="assets/css/carbon.css">
   <link rel="stylesheet" href="assets/css/style.css">
 </head>
 <body>
-  <a class="skip-link" href="#main">İçeriğe geç</a>
+  <a class="skip-link" href="#main-content">Ana içeriğe geç</a>
   <header id="site-header"></header>
-  <main id="main">
-    <section class="hero home-hero">
+
+  <main id="main-content" tabindex="-1">
+    <section class="hero">
       <div class="container hero-layout">
         <div class="hero-copy">
-          <p class="eyebrow"><span class="red-square"></span> ODTÜ ROKET TAKIMI / ANKARA</p>
-          <h1>Gökyüzünü<br>birlikte<br><span>tasarlıyoruz.</span></h1>
-          <p class="lead">Bir fikirden ilk uçuşa. Roketlerimizi tasarlıyor, üretiyor ve test ediyor; mühendisliği sahada öğreniyoruz.</p>
+          <p class="eyebrow">METUSAR / Orta Doğu Teknik Üniversitesi</p>
+          <h1>Roket tasarlıyoruz.<br>Üretiyoruz. Uçuruyoruz.</h1>
+          <p class="lead">Tasarım masasından uçuş sahasına. ODTÜ öğrencileri olarak roketlerin tasarım, üretim ve test süreçlerini birlikte yürütüyoruz.</p>
           <div class="btn-row">
-            <a class="btn btn-primary" href="yarismalar.html">Projelerimizi keşfet <span aria-hidden="true">↗</span></a>
-            <a class="btn btn-ghost" href="hakkimizda.html">Takımı tanı <span aria-hidden="true">→</span></a>
+            <a class="cds--btn cds--btn--primary btn btn-primary" href="yarismalar.html">Yarışmalarımız <span aria-hidden="true">→</span></a>
+            <a class="cds--btn cds--btn--tertiary btn btn-ghost" href="hakkimizda.html">Takımı tanıyın <span aria-hidden="true">→</span></a>
           </div>
-          <div class="hero-footnote"><span class="status-dot"></span> ÖĞRENCİLERİN EMEĞİYLE. MÜHENDİSLİĞİN GÜCÜYLE.</div>
         </div>
-        <div class="engineering-art" role="img" aria-label="Roket tasarımını temsil eden dekoratif teknik çizim">
-          <div class="art-top"><span>METUSAR / ENGINEERING</span><span>01 — CONCEPT</span></div>
-          <svg viewBox="0 0 480 600" aria-hidden="true">
-            <defs>
-              <pattern id="grid" width="32" height="32" patternUnits="userSpaceOnUse"><path d="M32 0H0V32" fill="none" stroke="#30333b" stroke-width=".65"/></pattern>
-              <linearGradient id="body" x1="0" x2="1"><stop stop-color="#40434b"/><stop offset=".48" stop-color="#b8bbc1"/><stop offset="1" stop-color="#363940"/></linearGradient>
-            </defs>
-            <rect width="480" height="600" fill="url(#grid)" opacity=".55"/>
-            <circle cx="240" cy="290" r="166" fill="none" stroke="#41434b"/>
-            <circle cx="240" cy="290" r="119" fill="none" stroke="#30333b" stroke-dasharray="3 7"/>
-            <path d="M240 30V560 M38 290H442" stroke="#464951" stroke-dasharray="5 7"/>
-            <g transform="rotate(24 240 290)">
-              <path d="M220 176Q220 113 240 70Q260 113 260 176Z" fill="url(#body)" stroke="#b5b8c0"/>
-              <path d="M220 176H260V431H220Z" fill="url(#body)" stroke="#b5b8c0"/>
-              <path d="M220 203H260V229H220Z" fill="#cc0000"/>
-              <path d="M220 360L188 430V446L220 423 M260 360L292 430V446L260 423" fill="#4a4d55" stroke="#a1a4ad"/>
-              <path d="M228 431H252L248 452H232Z" fill="#22242b" stroke="#a1a4ad"/>
-              <path d="M240 464V521" stroke="#cc0000" stroke-width="2" stroke-dasharray="4 6"/>
-              <path d="M220 270H260 M220 337H260" stroke="#595c64"/>
-            </g>
-            <g fill="none" stroke="#81858e" stroke-width=".8"><path d="M294 145H365L380 130"/><path d="M218 279H116L96 299"/><path d="M196 415H332L350 433"/></g>
-            <g fill="#b5b8c0" font-family="monospace" font-size="9" letter-spacing="1.5"><text x="326" y="117">TASARIM</text><text x="45" y="317">AVİYONİK</text><text x="326" y="452">ENTEGRASYON</text></g>
-            <g fill="#cc0000"><circle cx="294" cy="145" r="3"/><circle cx="218" cy="279" r="3"/><circle cx="196" cy="415" r="3"/></g>
-          </svg>
-          <div class="art-bottom"><span>FİKİRDEN UÇUŞA</span><span>ŞEMATİK GÖSTERİM ↗</span></div>
+        <aside class="hero-index" aria-label="Çalışma alanları">
+          <p>Bir roket, birlikte çalışan disiplinler.</p>
+          <a href="hakkimizda.html">Tasarım ve üretim <span aria-hidden="true">↗</span></a>
+          <a href="egitim.html">Eğitim ve dokümantasyon <span aria-hidden="true">↗</span></a>
+        </aside>
+      </div>
+    </section>
+
+    <section>
+      <div class="container section-layout">
+        <div class="section-heading">
+          <p class="eyebrow">01 / Yaklaşımımız</p>
+          <h2 class="section-title">Birlikte öğrenmek.<br>Birlikte geliştirmek.</h2>
+        </div>
+        <div class="section-body">
+          <div class="feature-row"><span class="number" aria-hidden="true">01</span><div><h3>Mühendislik pratiği</h3><p>Derste öğrenilen teoriyi bir roketin tasarım, üretim ve test süreçleriyle birleştiriyoruz.</p></div></div>
+          <div class="feature-row"><span class="number" aria-hidden="true">02</span><div><h3>ODTÜ’yü temsil etmek</h3><p>Ulusal ve uluslararası roket yarışmaları için farklı disiplinlerden öğrencilerle birlikte çalışıyoruz.</p></div></div>
+          <div class="feature-row"><span class="number" aria-hidden="true">03</span><div><h3>Bilgiyi paylaşmak</h3><p>Edindiğimiz deneyimi eğitimler ve dokümanlarla yeni takım üyelerine aktarıyoruz.</p></div></div>
         </div>
       </div>
-      <div class="container process-strip"><span><b>01</b> TASARIM</span><span><b>02</b> ÜRETİM</span><span><b>03</b> TEST</span><span><b>04</b> UÇUŞ</span></div>
     </section>
-    <section class="mission-section">
+
+    <section>
       <div class="container">
-        <div class="section-heading"><p class="eyebrow">BİZİ BİR ARAYA GETİREN</p><h2 class="section-title">Merakla başlar.<br>Mühendislikle yükselir.</h2><p class="section-sub">Farklı disiplinler, ortak bir hedef. Teoriyi gerçek sistemlere dönüştüren bir takım.</p></div>
-        <div class="grid grid-3 purpose-grid">
-          <article class="card"><span class="card-number">01 / GELİŞTİR</span><h3>Mühendisliği sahaya taşı.</h3><p>Mekanikten aviyoniğe, tasarımdan teste; bir roketin her aşamasında sorumluluk alıyoruz.</p></article>
-          <article class="card"><span class="card-number">02 / TEMSİL ET</span><h3>ODTÜ'den gökyüzüne.</h3><p>Ulusal ve uluslararası yarışmalarda üniversitemizi temsil etmek için birlikte çalışıyoruz.</p></article>
-          <article class="card"><span class="card-number">03 / PAYLAŞ</span><h3>Bilgi, paylaştıkça yükselir.</h3><p>Öğrendiklerimizi eğitimler ve dokümanlarla yeni ekip arkadaşlarımıza ve merak eden herkese aktarıyoruz.</p></article>
-        </div>
-      </div>
-    </section>
-    <section class="explore-section">
-      <div class="container"><p class="eyebrow">METUSAR'I KEŞFET</p><div class="explore-heading"><h2 class="section-title">Çalışmalarımızın<br>bir parçası ol.</h2><p>Projelerimizi incele, hedeflerimizi keşfet,<br>birlikte öğrendiklerimize ortak ol.</p></div>
-        <div class="explore-list">
-          <a href="yarismalar.html"><span class="row-index">01</span><h3>Yarışmalar & projeler</h3><span>Geliştirdiğimiz sistemler ve yarışma yolculuğumuz</span><b aria-hidden="true">↗</b></a>
-          <a href="yol-haritasi.html"><span class="row-index">02</span><h3>Yol haritamız</h3><span>Bir sonraki adım, bir sonraki hedef</span><b aria-hidden="true">↗</b></a>
-          <a href="egitim.html"><span class="row-index">03</span><h3>Açık eğitim kaynakları</h3><span>Deneyimden bilgiye, bilgiden yeni fikirlere</span><b aria-hidden="true">↗</b></a>
-          <a href="referanslar.html"><span class="row-index">04</span><h3>Referans kütüphanesi</h3><span>Çalışmalarımıza yön veren kaynaklar</span><b aria-hidden="true">↗</b></a>
+        <p class="eyebrow">02 / Takım ve kaynaklar</p>
+        <h2 class="section-title">METUSAR’ı keşfedin</h2>
+        <p class="section-sub">Takım hakkında aradığınız her şey.</p>
+        <div class="grid grid-2 explore-grid">
+          <a class="card" href="yarismalar.html">
+            <h3>Yarışmalar</h3>
+            <p>Geçmişte katıldığımız yarışmalar, sonuçlarımız ve önümüzdeki yarışmalar.</p>
+                      <span class="tile-arrow" aria-hidden="true">↗</span>
+          </a>
+          <a class="card" href="yol-haritasi.html">
+            <h3>Yol Haritası</h3>
+            <p>Orta vadeli hedeflerimiz ve ODTÜ'de hayata geçirmek istediğimiz projeler.</p>
+                      <span class="tile-arrow" aria-hidden="true">↗</span>
+          </a>
+          <a class="card" href="egitim.html">
+            <h3>Eğitim</h3>
+            <p>Takımın hazırladığı eğitim videoları, sunumlar ve ders notları.</p>
+                      <span class="tile-arrow" aria-hidden="true">↗</span>
+          </a>
+          <a class="card" href="referanslar.html">
+            <h3>Referanslar</h3>
+            <p>Kitaplar, yazılımlar ve faydalandığımız dış kaynaklar.</p>
+                      <span class="tile-arrow" aria-hidden="true">↗</span>
+          </a>
         </div>
       </div>
     </section>
   </main>
+
   <footer id="site-footer"></footer>
   <script src="assets/js/main.js"></script>
 </body>

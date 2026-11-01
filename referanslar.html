@@ -4,14 +4,15 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Referanslar — METUSAR</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700;800&family=Geist+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/css/fonts.css">
+  <link rel="stylesheet" href="assets/css/carbon.css">
   <link rel="stylesheet" href="assets/css/style.css">
 </head>
 <body>
+  <a class="skip-link" href="#main-content">Ana içeriğe geç</a>
   <header id="site-header"></header>
 
-  <main>
+  <main id="main-content" tabindex="-1">
     <div class="page-hero">
       <div class="container">
         <p class="eyebrow">Referanslar</p>
@@ -22,7 +23,8 @@
 
     <section>
       <div class="container">
-        <input id="reference-search" class="search" type="search" placeholder="Referanslarda ara…">
+        <label class="search-label" for="reference-search">Referanslarda ara</label>
+        <input id="reference-search" class="search cds--text-input" type="search" placeholder="Referanslarda ara…">
         <div id="reference-filters" class="filters"></div>
         <div id="reference-list"></div>
       </div>

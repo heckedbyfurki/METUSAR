@@ -1,0 +1,32 @@
+{
+  "name": "metusar",
+  "version": "1.0.0",
+  "description": "METUSAR static website with Carbon foundations and compiled Carbon components.",
+  "main": "index.js",
+  "scripts": {
+    "build:css": "sass --load-path=node_modules --style=compressed --no-source-map src/carbon.scss assets/css/carbon.css",
+    "check": "node --check assets/js/main.js && node --check assets/js/library.js && node --check assets/js/content.js",
+    "preview": "python3 -m http.server 8000",
+    "dev": "vite"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/heckedbyfurki/METUSAR.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/heckedbyfurki/METUSAR/issues"
+  },
+  "homepage": "https://github.com/heckedbyfurki/METUSAR#readme",
+  "devDependencies": {
+    "@carbon/styles": "^1.118.0",
+    "@ibm/plex-mono": "^2.5.0",
+    "@ibm/plex-sans": "^1.1.0",
+    "sass": "^1.107.1",
+    "vite": "^8.3.5"
+  },
+  "private": true
+}

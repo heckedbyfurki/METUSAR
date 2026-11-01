@@ -10,8 +10,8 @@ function videoCard(v) {
   const url = has ? `https://www.youtube.com/watch?v=${encodeURIComponent(v.youtube)}` : null;
   const thumb = has
     ? `<div class="video-thumb" style="background-image:url('https://img.youtube.com/vi/${encodeURIComponent(v.youtube)}/hqdefault.jpg')"><div class="play">▶</div></div>`
-    : `<div class="video-thumb empty"><span class="tag orange">YAKINDA</span></div>`;
-  const tags = [v.category, v.level, v.duration, v.speaker].filter(Boolean).map((t, i) => `<span class="tag${i === 0 ? " red" : ""}">${esc(t)}</span>`).join("");
+    : `<div class="video-thumb empty"><span class="cds--tag tag orange">YAKINDA</span></div>`;
+  const tags = [v.category, v.level, v.duration, v.speaker].filter(Boolean).map((t, i) => `<span class="cds--tag tag${i === 0 ? " red" : ""}">${esc(t)}</span>`).join("");
   const inner = `${thumb}<div class="video-body"><h3>${esc(v.title)}</h3><p>${esc(v.description)}</p><div class="meta">${tags}</div></div>`;
   return has
     ? `<a class="card video-card" href="${url}" target="_blank" rel="noopener">${inner}</a>`
@@ -24,8 +24,8 @@ function resourceItem(r) {
     : `${esc(r.title)}`;
   return `<li class="card res-item">
     <div><h3>${title}</h3><p>${esc(r.description)}</p></div>
-    <div style="display:flex;flex-direction:column;gap:.35rem;align-items:flex-end;flex-shrink:0">
-      <span class="tag red">${esc(r.type)}</span><span class="tag">${esc(r.category)}</span>
+    <div class="resource-meta">
+      <span class="cds--tag tag red">${esc(r.type)}</span><span class="cds--tag tag">${esc(r.category)}</span>
     </div>
   </li>`;
 }
@@ -33,18 +33,22 @@ function resourceItem(r) {
 /* Bir filtre + arama + liste grubunu bağlar */
 function mountLibrary({ items, listEl, filterEl, searchEl, render, wrap = (h) => h }) {
   if (!listEl) return;
+  listEl.setAttribute("aria-live", "polite");
   let cat = "Tümü";
   let q = "";
   const used = CATEGORIES.filter((c) => items.some((i) => i.category === c));
   if (filterEl) {
     filterEl.innerHTML = ["Tümü", ...used]
-      .map((c) => `<button class="filter-btn${c === cat ? " active" : ""}" data-cat="${esc(c)}">${esc(c)}</button>`)
+      .map((c) => `<button class="filter-btn${c === cat ? " active" : ""}" aria-pressed="${c === cat}" data-cat="${esc(c)}">${esc(c)}</button>`)
       .join("");
     filterEl.addEventListener("click", (e) => {
       const b = e.target.closest(".filter-btn");
       if (!b) return;
       cat = b.dataset.cat;
-      filterEl.querySelectorAll(".filter-btn").forEach((x) => x.classList.toggle("active", x === b));
+      filterEl.querySelectorAll(".filter-btn").forEach((x) => {
+        x.classList.toggle("active", x === b);
+        x.setAttribute("aria-pressed", String(x === b));
+      });
       draw();
     });
   }
