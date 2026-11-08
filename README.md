@@ -29,3 +29,7 @@ Sade HTML/CSS/JS ile yazılmış statik bir site. Derleme adımı yok; GitHub Pa
 
 Repo → **Settings → Pages → Build and deployment → Source: Deploy from a branch → Branch: `main` / `(root)`** → Save.
 Birkaç dakika sonra site `https://mbedilsah-tech.github.io/metusar/` adresinde yayında olur.
+
+## Güncelleme sonrası önbellek
+
+`style.css` veya bir `.js` dosyasını değiştirdiğinizde, tüm `.html` dosyalarındaki `?v=...` değerini (örn. tarih: `?v=20261108`) yeni bir değerle değiştirin. Böylece ziyaretçilerin tarayıcısı eski dosyayı önbellekten kullanmaz, yenisini indirir.
