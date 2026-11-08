@@ -61,6 +61,13 @@ const VIDEOS = [
    link: Google Drive / PDF / GitHub vb. adres */
 const TRAININGS = [
   {
+    title: "TEKNOFEST 2025 Yarışma Süreci Özet ve Değerlendirme Raporu",
+    description: "Takımın kuruluşundan atış gününe kadar tüm süreç: alt ekiplerin çalışmaları, montaj ve atış günü, hatalarımız ve sonraki takımlara tavsiyeler.",
+    category: "Temel Roketçilik",
+    type: "Rapor",
+    link: "assets/docs/METUSAR-TEKNOFEST-2025-Degerlendirme-Raporu.pdf",
+  },
+  {
     title: "Yeni Üye Başlangıç Rehberi",
     description: "Takım yapısı, alt ekipler, kullanılan araçlar ve ilk hafta yapılacaklar.",
     category: "Temel Roketçilik",
