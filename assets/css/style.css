@@ -204,6 +204,60 @@ a.card:hover { border-color: var(--accent); transform: translateY(-2px); }
 .timeline .meta { display: flex; gap: .5rem; flex-wrap: wrap; align-items: center; margin-bottom: .5rem; }
 .timeline ul { margin: .75rem 0 0; padding-left: 1.1rem; color: var(--muted); }
 
+/* ---------- Yarışmalar ---------- */
+.season + .season { margin-top: 3rem; }
+.season-head { display: flex; align-items: center; gap: .75rem; margin-bottom: 1.25rem; }
+.season-head .section-title { margin: 0; }
+.comp-card {
+  font: inherit; color: inherit; text-align: left; cursor: pointer; width: 100%;
+  display: flex; flex-direction: column; gap: .6rem;
+  transition: border-color .15s, transform .15s;
+}
+.comp-card:hover, .comp-card:focus-visible { border-color: var(--accent); transform: translateY(-2px); outline: none; }
+.comp-card h3 { margin: 0; font-size: 1.35rem; }
+.comp-card p { margin: 0; }
+.comp-top { display: flex; justify-content: space-between; align-items: center; gap: .5rem; flex-wrap: wrap; }
+.comp-more { margin-top: auto; padding-top: .4rem; color: var(--accent-2); font-size: .9rem; font-weight: 600; }
+.comp-card.upcoming { border-style: dashed; border-color: rgba(255,122,61,.55); background: linear-gradient(135deg, rgba(255,122,61,.08), var(--card)); }
+
+.soon {
+  display: inline-flex; align-items: center; gap: .4rem;
+  font-family: var(--mono); font-size: .78rem; letter-spacing: .15em; color: var(--accent-2);
+  padding: .2rem .6rem; border: 1px dashed rgba(255,122,61,.6); border-radius: 6px;
+}
+.hourglass { display: inline-block; animation: hourglass 2.4s ease-in-out infinite; }
+@keyframes hourglass { 0%, 40% { transform: rotate(0); } 50%, 90% { transform: rotate(180deg); } 100% { transform: rotate(360deg); } }
+@media (prefers-reduced-motion: reduce) { .hourglass { animation: none; } }
+
+.comp-dialog {
+  width: min(640px, calc(100% - 2rem)); max-height: min(85vh, 760px); padding: 0;
+  background: var(--card); color: var(--text); border: 1px solid var(--line); border-radius: var(--radius);
+  box-shadow: 0 30px 80px rgba(0,0,0,.6);
+}
+.comp-dialog::backdrop { background: rgba(5,8,13,.7); backdrop-filter: blur(4px); }
+.comp-dialog-body { padding: 1.5rem 1.6rem 1.8rem; }
+.comp-dialog-head { display: flex; justify-content: space-between; align-items: flex-start; gap: 1rem; }
+.comp-dialog-head .eyebrow { margin-bottom: .35rem; }
+.comp-dialog-head h2 { margin: 0; font-size: 1.7rem; letter-spacing: -.01em; }
+.dialog-close { flex-shrink: 0; width: 38px; height: 38px; border-radius: 50%; border: 1px solid var(--line); background: var(--bg-2); color: var(--text); font-size: 1rem; cursor: pointer; }
+.dialog-close:hover { border-color: var(--accent); }
+.comp-facts { display: grid; grid-template-columns: repeat(3, 1fr); gap: .75rem; margin: 1.25rem 0 0; }
+.comp-facts div { background: var(--bg-2); border-radius: 10px; padding: .7rem .9rem; }
+.comp-facts dt { font-size: .75rem; color: var(--muted); text-transform: uppercase; letter-spacing: .08em; }
+.comp-facts dd { margin: .2rem 0 0; font-weight: 600; }
+.comp-summary { color: var(--muted); margin: 1rem 0 0; }
+.comp-dialog h3 { margin: 1.6rem 0 .6rem; font-size: 1rem; text-transform: uppercase; letter-spacing: .08em; color: var(--muted); }
+.empty-note { margin: 0; padding: .9rem 1rem; border: 1px dashed var(--line); border-radius: 10px; color: var(--muted); font-size: .92rem; }
+.team-list { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: .5rem; }
+.team-list li { background: var(--bg-2); border-radius: 10px; padding: .6rem .8rem; display: flex; flex-direction: column; }
+.team-list span { color: var(--muted); font-size: .85rem; }
+.doc-list { list-style: none; margin: 0; padding: 0; display: grid; gap: .5rem; }
+.doc-list li { display: flex; align-items: center; gap: .75rem; background: var(--bg-2); border-radius: 10px; padding: .65rem .9rem; }
+.doc-title { flex: 1; }
+.doc-title a { text-decoration: none; }
+.doc-title a:hover { color: var(--accent-2); }
+@media (max-width: 560px) { .comp-facts { grid-template-columns: 1fr 1fr; } }
+
 /* ---------- Eğitim ---------- */
 .filters { display: flex; gap: .5rem; flex-wrap: wrap; margin-bottom: 1.75rem; }
 .filter-btn {

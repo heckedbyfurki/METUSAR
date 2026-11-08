@@ -1,0 +1,193 @@
+/* ==========================================================
+   YARIŞMALAR
+   Yarışma eklemek / bilgi güncellemek için sadece COMPETITIONS listesini düzenleyin.
+   HTML bilmenize gerek yok — mevcut bir bloğu kopyalayıp değiştirin.
+
+   Alanlar:
+     id        : adres çubuğunda görünen kısa ad (boşluksuz, ör. "zorlu-gorev-2026")
+     season    : yıl
+     upcoming  : true → "YAKINDA" olarak gösterilir (önümüzdeki sezon)
+     name      : yarışma adı
+     category  : kategori
+     result    : sonuç (ör. "3.lük", "Finalist", "ÖTR aşaması")
+     highlight : true → sonuç kırmızı etiketle vurgulanır (derece aldığımız yarışmalar)
+     summary   : kısa açıklama (boş bırakılabilir)
+     team      : yarışmaya katılanlar → { name: "Ad Soyad", role: "Görev" }
+     documents : ilgili dosyalar → { title: "...", type: "STEP" | "Kod" | "PCB" | "Rapor" | "Sunum" | "Diğer", link: "..." }
+                 link: Google Drive / GitHub / site içi dosya adresi
+   ========================================================== */
+const COMPETITIONS = [
+  /* ---------- Önümüzdeki sezon ---------- */
+  {
+    id: "zorlu-gorev-2027",
+    season: 2027,
+    upcoming: true,
+    name: "TEKNOFEST Roket Yarışması",
+    category: "Zorlu Görev",
+    result: "",
+    summary: "",
+    team: [],
+    documents: [],
+  },
+
+  /* ---------- 2026 ---------- */
+  {
+    id: "zorlu-gorev-2026",
+    season: 2026,
+    name: "TEKNOFEST Roket Yarışması",
+    category: "Zorlu Görev",
+    result: "3.lük",
+    highlight: true,
+    summary: "",
+    team: [],
+    documents: [],
+  },
+  {
+    id: "yuksek-irtifa-2026",
+    season: 2026,
+    name: "TEKNOFEST Roket Yarışması",
+    category: "Yüksek İrtifa",
+    result: "Finalist",
+    highlight: true,
+    summary: "",
+    team: [],
+    documents: [],
+  },
+  {
+    id: "orta-irtifa-2026",
+    season: 2026,
+    name: "TEKNOFEST Roket Yarışması",
+    category: "Orta İrtifa",
+    result: "ÖTR aşaması",
+    summary: "",
+    team: [],
+    documents: [],
+  },
+
+  /* ---------- 2025 ---------- */
+  {
+    id: "orta-irtifa-2025",
+    season: 2025,
+    name: "TEKNOFEST Roket Yarışması",
+    category: "Orta İrtifa",
+    result: "3.lük",
+    highlight: true,
+    summary: "Takımımızın ilk yarışması. 25 finalist takım arasında 3. olduk.",
+    team: [],
+    documents: [
+      {
+        title: "Yarışma Süreci Özet ve Değerlendirme Raporu",
+        type: "Rapor",
+        link: "assets/docs/METUSAR-TEKNOFEST-2025-Degerlendirme-Raporu.pdf",
+      },
+    ],
+  },
+];
+
+/* ==========================================================
+   Aşağısı sayfayı oluşturan kod — düzenlemenize gerek yok.
+   ========================================================== */
+(() => {
+  const esc = (s) => String(s ?? "").replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
+  const DOC_ICON = { STEP: "🧩", Kod: "💻", PCB: "🔌", Rapor: "📄", Sunum: "📊", "Diğer": "📁" };
+  const SOON = `<span class="soon"><span class="hourglass" aria-hidden="true">⏳</span>YAKINDA</span>`;
+
+  function card(c) {
+    const resultTag = c.upcoming
+      ? SOON
+      : `<span class="tag${c.highlight ? " red" : ""}">${esc(c.result)}</span>`;
+    return `
+      <button class="card comp-card${c.upcoming ? " upcoming" : ""}" data-id="${esc(c.id)}" aria-haspopup="dialog">
+        <div class="comp-top">
+          <span class="tag">${esc(c.name)}</span>
+          ${resultTag}
+        </div>
+        <h3>${esc(c.category)}</h3>
+        ${c.summary ? `<p>${esc(c.summary)}</p>` : ""}
+        <span class="comp-more">Ayrıntılar →</span>
+      </button>`;
+  }
+
+  function render() {
+    const root = document.getElementById("competition-list");
+    if (!root) return;
+    const seasons = [...new Set(COMPETITIONS.map((c) => c.season))].sort((a, b) => b - a);
+    root.innerHTML = seasons.map((y) => {
+      const items = COMPETITIONS.filter((c) => c.season === y);
+      const up = items.every((c) => c.upcoming);
+      return `
+        <div class="season">
+          <div class="season-head">
+            <h2 class="section-title">${y}</h2>
+            <span class="tag${up ? " orange" : ""}">${up ? "Önümüzdeki sezon" : "Sezon"}</span>
+          </div>
+          <div class="grid grid-3">${items.map(card).join("")}</div>
+        </div>`;
+    }).join("");
+    root.addEventListener("click", (e) => {
+      const b = e.target.closest(".comp-card");
+      if (b) open(b.dataset.id);
+    });
+  }
+
+  const empty = (t) => `<p class="empty-note">${t}</p>`;
+
+  function detail(c) {
+    const team = c.team.length
+      ? `<ul class="team-list">${c.team.map((m) => `<li><b>${esc(m.name)}</b>${m.role ? `<span>${esc(m.role)}</span>` : ""}</li>`).join("")}</ul>`
+      : empty("Katılımcı listesi yakında eklenecek.");
+    const docs = c.documents.length
+      ? `<ul class="doc-list">${c.documents.map((d) => {
+          const icon = DOC_ICON[d.type] || DOC_ICON["Diğer"];
+          const title = d.link
+            ? `<a href="${esc(d.link)}" target="_blank" rel="noopener">${esc(d.title)} ↗</a>`
+            : esc(d.title);
+          return `<li><span class="doc-icon" aria-hidden="true">${icon}</span><span class="doc-title">${title}</span><span class="tag">${esc(d.type)}</span></li>`;
+        }).join("")}</ul>`
+      : empty("STEP dosyaları, kodlar, PCB tasarımları ve raporlar yakında eklenecek.");
+    return `
+      <div class="comp-dialog-head">
+        <div>
+          <p class="eyebrow">${esc(c.name)} · ${c.season}</p>
+          <h2>${esc(c.category)}</h2>
+        </div>
+        <button class="dialog-close" aria-label="Kapat">✕</button>
+      </div>
+      <dl class="comp-facts">
+        <div><dt>Sezon</dt><dd>${c.season}</dd></div>
+        <div><dt>Kategori</dt><dd>${esc(c.category)}</dd></div>
+        <div><dt>Sonuç</dt><dd>${c.upcoming ? SOON : esc(c.result)}</dd></div>
+      </dl>
+      ${c.summary ? `<p class="comp-summary">${esc(c.summary)}</p>` : ""}
+      <h3>Takım</h3>
+      ${team}
+      <h3>Dokümanlar</h3>
+      ${docs}`;
+  }
+
+  const dlg = document.getElementById("competition-dialog");
+
+  function open(id, push = true) {
+    const c = COMPETITIONS.find((x) => x.id === id);
+    if (!c || !dlg) return;
+    dlg.querySelector(".comp-dialog-body").innerHTML = detail(c);
+    if (!dlg.open) dlg.showModal();
+    if (push && location.hash !== "#" + id) history.replaceState(null, "", "#" + id);
+  }
+  function close() {
+    if (dlg && dlg.open) dlg.close();
+  }
+
+  if (dlg) {
+    dlg.addEventListener("click", (e) => {
+      if (e.target === dlg || e.target.closest(".dialog-close")) close();
+    });
+    dlg.addEventListener("close", () => {
+      if (location.hash) history.replaceState(null, "", location.pathname + location.search);
+    });
+  }
+
+  render();
+  // Bağlantıyla gelinirse (ör. yarismalar.html#zorlu-gorev-2026) ilgili pencereyi aç
+  if (location.hash) open(decodeURIComponent(location.hash.slice(1)), false);
+})();
