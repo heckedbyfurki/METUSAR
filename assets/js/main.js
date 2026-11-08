@@ -9,7 +9,7 @@ const NAV = [
   { href: "referanslar.html", label: "Referanslar" },
 ];
 
-const LOGO = `<img class="brand-mark" src="assets/img/logo-mark.png" alt="" width="34" height="34">`;
+const LOGO = `<img class="brand-mark" src="assets/img/logo-mark.svg" alt="" width="34" height="34">`;
 
 function currentPage() {
   const p = location.pathname.split("/").pop();
