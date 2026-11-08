@@ -9,13 +9,7 @@ const NAV = [
   { href: "referanslar.html", label: "Referanslar" },
 ];
 
-const LOGO = `
-<svg class="brand-mark" viewBox="0 0 32 32" fill="none" aria-hidden="true">
-  <path d="M16 2c4 3.5 6 8 6 13.5V22h-12v-6.5C10 10 12 5.5 16 2z" fill="#e7ecf3"/>
-  <circle cx="16" cy="13" r="2.6" fill="#e3262f"/>
-  <path d="M10 18l-4 5v2h4zM22 18l4 5v2h-4z" fill="#e3262f"/>
-  <path d="M13 23h6l-1 4c-.6 1.6-2 3-2 3s-1.4-1.4-2-3z" fill="#ff7a3d"/>
-</svg>`;
+const LOGO = `<img class="brand-mark" src="assets/img/logo-mark.png" alt="" width="34" height="34">`;
 
 function currentPage() {
   const p = location.pathname.split("/").pop();
@@ -71,3 +65,17 @@ function renderFooter() {
 
 renderHeader();
 renderFooter();
+
+// Fotoğraf bandı: görseller henüz yüklenmemişse boş kutu göstermek yerine bölümü gizle
+document.querySelectorAll(".photo-band").forEach((band) => {
+  const photos = band.querySelectorAll(".photo");
+  let ok = 0;
+  band.hidden = true;
+  photos.forEach((ph) => {
+    const url = (ph.style.backgroundImage.match(/url\(["']?(.*?)["']?\)/) || [])[1];
+    if (!url) return;
+    const img = new Image();
+    img.onload = () => { if (++ok === photos.length) band.hidden = false; };
+    img.src = url;
+  });
+});

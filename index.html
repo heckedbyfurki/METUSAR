@@ -7,14 +7,23 @@
   <meta name="description" content="METUSAR, Orta Doğu Teknik Üniversitesi'nin roket takımı. Yarışmalarımız, hedeflerimiz ve eğitim kaynaklarımız.">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;800&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet">
+  <link rel="icon" type="image/png" href="assets/img/logo-mark.png">
   <link rel="stylesheet" href="assets/css/style.css">
 </head>
 <body>
   <header id="site-header"></header>
 
   <main>
-    <section class="hero">
-      <div class="container">
+    <section class="hero hero-media">
+      <!-- Arka plan videosu: assets/video/ucus.mp4 dosyası eklenince kendiliğinden oynar.
+           Video yüklenene kadar roket-1.jpg fotoğrafı görünür. -->
+      <video class="hero-video" autoplay muted loop playsinline preload="auto"
+             poster="assets/img/roket-1.jpg" aria-hidden="true">
+        <source src="assets/video/ucus.mp4" type="video/mp4">
+      </video>
+      <div class="hero-overlay" aria-hidden="true"></div>
+      <div class="container hero-grid">
+        <div>
         <p class="eyebrow">ODTÜ · Ankara · Roket Takımı</p>
         <h1>Gökyüzüne ODTÜ'de ulaşıyoruz. 🚀</h1>
         <p class="lead">
@@ -25,6 +34,8 @@
           <a class="btn btn-primary" href="yarismalar.html">Yarışmalarımız →</a>
           <a class="btn btn-ghost" href="egitim.html">Eğitim Kaynakları</a>
         </div>
+        </div>
+        <img class="hero-logo" src="assets/img/logo-dark-bg.png" alt="METUSAR — Sky of Anatolia Rocket logosu" width="227" height="290">
       </div>
     </section>
 
@@ -39,6 +50,11 @@
           <div class="stat"><b>— m</b><span>En yüksek irtifa</span></div>
         </div>
       </div>
+    </section>
+
+    <section class="photo-band" aria-label="Atışlarımızdan kareler">
+      <div class="photo" style="background-image:url('assets/img/roket-1.jpg')"><span>Rampadan kalkış</span></div>
+      <div class="photo" style="background-image:url('assets/img/roket-2.jpg')"><span>Gökyüzüne yükseliş</span></div>
     </section>
 
     <section>
