@@ -103,26 +103,46 @@ img { max-width: 100%; display: block; }
 .page-hero p { color: var(--muted); margin: 0; max-width: 60ch; font-size: 1.1rem; }
 
 /* ---------- Ana sayfa: arka plan videosu + logo ---------- */
-.hero-media { min-height: min(88vh, 760px); display: flex; align-items: center; }
+.hero-media { min-height: min(90vh, 820px); display: flex; align-items: center; padding: 4rem 0; }
 .hero-video {
   position: absolute; inset: 0; width: 100%; height: 100%;
   object-fit: cover; z-index: 0;
+  filter: blur(14px) saturate(1.1); transform: scale(1.08); /* bilgisayarda yumuşak arka plan */
 }
-.hero-overlay { /* yazıların okunması için videonun üstüne karartma */
+.hero-overlay { /* yazıların okunması için hafif karartma */
   position: absolute; inset: 0; z-index: 0; pointer-events: none;
   background:
-    linear-gradient(90deg, rgba(11,15,23,.92) 0%, rgba(11,15,23,.7) 50%, rgba(11,15,23,.35) 100%),
-    linear-gradient(180deg, rgba(11,15,23,0) 60%, var(--bg) 100%);
+    linear-gradient(90deg, rgba(11,15,23,.85) 0%, rgba(11,15,23,.55) 55%, rgba(11,15,23,.25) 100%),
+    linear-gradient(180deg, rgba(11,15,23,0) 70%, var(--bg) 100%);
 }
 .hero-media::before { z-index: 0; }
 .hero-media .container { z-index: 1; }
-.hero-grid { display: grid; grid-template-columns: 1fr auto; align-items: center; gap: 2rem; }
-.hero-logo { width: clamp(200px, 24vw, 300px); height: auto; }
-@media (max-width: 820px) {
-  .hero-grid { grid-template-columns: 1fr; }
-  .hero-logo { order: -1; width: 140px; }
+.hero-grid { display: grid; grid-template-columns: 1fr auto; align-items: center; gap: 3rem; }
+.hero-logo { display: block; width: clamp(100px, 9vw, 130px); height: auto; margin: 0 0 1rem; }
+.hero-media h1 { font-size: clamp(2.4rem, 5vw, 3.9rem); }
+.hero-clip {
+  width: clamp(260px, 26vw, 360px); aspect-ratio: 478 / 850;
+  border-radius: 22px; overflow: hidden; background: #000;
+  border: 1px solid rgba(255,255,255,.15);
+  box-shadow: 0 30px 80px rgba(0,0,0,.55);
 }
-@media (prefers-reduced-motion: reduce) { .hero-video { display: none; } }
+.hero-clip video { width: 100%; height: 100%; object-fit: cover; display: block; }
+
+@media (max-width: 820px) {
+  /* telefonda dikey video tüm arka planı net şekilde kaplar */
+  .hero-media { min-height: calc(100svh - 68px); align-items: flex-end; padding: 3rem 0 2.5rem; }
+  .hero-video { filter: none; transform: none; }
+  .hero-overlay {
+    background: linear-gradient(180deg, rgba(11,15,23,0) 0%, rgba(11,15,23,0) 35%, rgba(11,15,23,.75) 62%, rgba(11,15,23,.95) 88%, var(--bg) 100%);
+  }
+  .hero-grid { grid-template-columns: 1fr; }
+  .hero-clip { display: none; }
+  .hero-logo { display: none; }  /* telefonda üst menüdeki amblem yeterli */
+  .hero-media h1 { font-size: 2.1rem; margin-bottom: .75rem; }
+  .hero-media p.lead { font-size: 1rem; color: #d5dce6; margin-bottom: 1.25rem; }
+  .hero-media .btn { padding: .65rem 1.1rem; font-size: .95rem; }
+}
+@media (prefers-reduced-motion: reduce) { .hero-video, .hero-clip video { display: none; } }
 
 /* Atış fotoğrafları bandı */
 .photo-band { padding: 0; display: grid; grid-template-columns: 1fr 1fr; gap: 2px; background: var(--line); }
