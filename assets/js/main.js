@@ -53,12 +53,12 @@ function renderFooter() {
         ${NAV.map((n) => `<a href="${n.href}">${n.label}</a>`).join("")}
       </div>
       <div class="footer-links">
-        <!-- Bağlantıları kendi hesaplarınızla değiştirin -->
-        <a href="mailto:iletisim@metusar.org">E-posta</a>
-        <a href="https://www.instagram.com/" target="_blank" rel="noopener">Instagram</a>
-        <a href="https://www.linkedin.com/" target="_blank" rel="noopener">LinkedIn</a>
-        <a href="https://www.youtube.com/" target="_blank" rel="noopener">YouTube</a>
-        <a href="https://github.com/mbedilsah-tech/metusar" target="_blank" rel="noopener">GitHub</a>
+        <a href="https://www.instagram.com/metu__sar/" target="_blank" rel="noopener">Instagram</a>
+        <a href="https://www.linkedin.com/company/metusar-roket-tak%C4%B1m%C4%B1/" target="_blank" rel="noopener">LinkedIn</a>
+        <a href="https://www.youtube.com/@METUSARRoketTak%C4%B1m%C4%B1" target="_blank" rel="noopener">YouTube</a>
+        <!-- E-posta ve GitHub hazır olunca buraya eklenecek:
+        <a href="mailto:...">E-posta</a>
+        <a href="https://github.com/..." target="_blank" rel="noopener">GitHub</a> -->
       </div>
     </div>`;
 }
