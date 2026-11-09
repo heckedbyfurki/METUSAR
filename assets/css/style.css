@@ -11,9 +11,10 @@
   --muted: #9aa6b8;
   --accent: #e3262f;      /* ODTÜ kırmızısı */
   --accent-2: #ff7a3d;    /* motor alevi turuncusu */
-  --radius: 14px;
+  --radius: 10px;
   --max: 1120px;
-  --font: "Inter", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  --font: "Manrope", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  --display: "Sora", var(--font);  /* başlıklar */
   --mono: "JetBrains Mono", ui-monospace, Menlo, monospace;
 }
 
@@ -25,8 +26,12 @@ body {
   background: var(--bg);
   color: var(--text);
   line-height: 1.65;
+  letter-spacing: .005em;
   -webkit-font-smoothing: antialiased;
 }
+h1, h2, h3, h4 { font-family: var(--display); font-weight: 700; letter-spacing: -.03em; }
+h3, h4 { font-weight: 600; letter-spacing: -.015em; }
+button { font-family: inherit; }
 a { color: inherit; }
 img { max-width: 100%; display: block; }
 .container { width: min(100% - 2.5rem, var(--max)); margin-inline: auto; }
@@ -35,8 +40,9 @@ img { max-width: 100%; display: block; }
 .site-header {
   position: sticky; top: 0; z-index: 50;
   background: rgba(11, 15, 23, 0.85);
-  backdrop-filter: blur(10px);
-  border-bottom: 1px solid var(--line);
+  backdrop-filter: saturate(140%) blur(12px);
+  -webkit-backdrop-filter: saturate(140%) blur(12px);
+  border-bottom: 1px solid rgba(255, 255, 255, .06);
 }
 .nav { display: flex; align-items: center; justify-content: space-between; height: 68px; }
 .brand { display: flex; align-items: center; gap: .6rem; text-decoration: none; font-weight: 800; letter-spacing: .08em; }
@@ -44,12 +50,15 @@ img { max-width: 100%; display: block; }
 .brand span { color: var(--accent); }
 .nav-links { display: flex; gap: .25rem; list-style: none; margin: 0; padding: 0; }
 .nav-links a {
-  display: block; padding: .5rem .85rem; border-radius: 999px;
-  text-decoration: none; color: var(--muted); font-size: .95rem; font-weight: 500;
-  transition: color .15s, background .15s;
+  display: block; position: relative; padding: .5rem .85rem;
+  text-decoration: none; color: var(--muted); font-size: .9rem; font-weight: 500;
+  transition: color .15s;
 }
-.nav-links a:hover { color: var(--text); background: var(--bg-2); }
-.nav-links a.active { color: #fff; background: var(--accent); }
+.nav-links a:hover, .nav-links a.active { color: var(--text); }
+.nav-links a.active::after { /* aktif sayfa: ince kırmızı alt çizgi */
+  content: ""; position: absolute; left: .85rem; right: .85rem; bottom: .25rem;
+  height: 2px; border-radius: 2px; background: var(--accent);
+}
 .nav-toggle { display: none; background: none; border: 1px solid var(--line); color: var(--text); border-radius: 8px; padding: .4rem .6rem; font-size: 1.1rem; cursor: pointer; }
 
 @media (max-width: 820px) {
@@ -83,24 +92,33 @@ img { max-width: 100%; display: block; }
     radial-gradient(1.5px 1.5px at 92% 88%, #fff, transparent);
 }
 .hero .container { position: relative; }
-.eyebrow { font-family: var(--mono); font-size: .8rem; letter-spacing: .2em; text-transform: uppercase; color: var(--accent-2); margin: 0 0 1rem; }
-.hero h1 { font-size: clamp(2.4rem, 6vw, 4.4rem); line-height: 1.05; margin: 0 0 1.25rem; letter-spacing: -.02em; max-width: 14ch; }
-.eyebrow.acronym b { color: #fff; font-weight: 700; }
-.hero p.lead { font-size: 1.2rem; color: var(--muted); max-width: 56ch; margin: 0 0 2rem; }
+.eyebrow { font-size: .75rem; font-weight: 600; letter-spacing: .16em; text-transform: uppercase; color: var(--accent-2); margin: 0 0 1rem; }
+.hero h1 { font-size: clamp(2.4rem, 6vw, 4.4rem); line-height: 1.08; margin: 0 0 1.25rem; max-width: 14ch; }
+/* METU | Sky of Anatolia Rocket — logodaki gibi METU beyaz, S-A-R kırmızı */
+.eyebrow.acronym { color: var(--muted); }
+.eyebrow.acronym .org { color: var(--text); font-weight: 700; }
+.eyebrow.acronym .sep {
+  display: inline-block; width: 1px; height: 11px; vertical-align: -1px;
+  margin: 0 12px 0 calc(12px - .16em); background: rgba(255, 255, 255, .25);
+}
+.eyebrow.acronym b { color: var(--accent); font-weight: 700; }
+.hero p.lead { font-size: 1.075rem; line-height: 1.7; color: #b3bdcc; max-width: 46ch; margin: 0 0 2rem; }
 .btn-row { display: flex; gap: .75rem; flex-wrap: wrap; }
 .btn {
   display: inline-flex; align-items: center; gap: .5rem;
-  padding: .8rem 1.3rem; border-radius: 999px; font-weight: 600; text-decoration: none;
-  border: 1px solid var(--line); transition: transform .15s, background .15s;
+  padding: .8rem 1.3rem; border-radius: 8px; font-weight: 600; letter-spacing: .01em; text-decoration: none;
+  border: 1px solid var(--line); transition: transform .15s, background .15s, border-color .15s;
 }
 .btn:hover { transform: translateY(-1px); }
+.btn:active { transform: translateY(1px); }
 .btn-primary { background: var(--accent); border-color: var(--accent); color: #fff; }
-.btn-ghost { background: transparent; }
-.btn-ghost:hover { background: var(--bg-2); }
+.btn-primary:hover { background: #c81e26; border-color: #c81e26; }
+.btn-ghost { background: transparent; border-color: rgba(255, 255, 255, .18); }
+.btn-ghost:hover { background: rgba(255, 255, 255, .04); border-color: rgba(255, 255, 255, .45); }
 
 .page-hero { padding: 4.5rem 0 3rem; border-bottom: 1px solid var(--line);
   background: radial-gradient(900px 300px at 90% 0%, rgba(227, 38, 47, .18), transparent 60%), var(--bg); }
-.page-hero h1 { font-size: clamp(2rem, 4.5vw, 3rem); margin: 0 0 .5rem; letter-spacing: -.02em; }
+.page-hero h1 { font-size: clamp(2rem, 4.5vw, 3rem); margin: 0 0 .5rem; }
 .page-hero p { color: var(--muted); margin: 0; max-width: 60ch; font-size: 1.1rem; }
 
 /* ---------- Ana sayfa: arka plan videosu + logo ---------- */
@@ -120,13 +138,13 @@ img { max-width: 100%; display: block; }
 .hero-media::before { z-index: 0; }
 .hero-media .container { z-index: 1; }
 .hero-grid { display: grid; grid-template-columns: 1fr auto; align-items: center; gap: 3rem; }
-.hero-logo { display: block; width: clamp(100px, 9vw, 130px); height: auto; margin: 0 0 1rem; }
-.hero-media h1 { font-size: clamp(2.4rem, 5vw, 3.9rem); }
+.hero-logo { display: block; width: 72px; height: auto; margin: 0 0 .5rem; }
+.hero-media h1 { font-size: clamp(2.4rem, 4.6vw, 3.4rem); }
 .hero-clip {
   height: min(calc(var(--hero-h) - 3rem), 820px); width: auto; aspect-ratio: 478 / 850;
-  border-radius: 22px; overflow: hidden; background: #000;
-  border: 1px solid rgba(255,255,255,.15);
-  box-shadow: 0 30px 80px rgba(0,0,0,.55);
+  border-radius: 12px; overflow: hidden; background: #000;
+  border: 1px solid rgba(255,255,255,.08);
+  box-shadow: 0 40px 80px -30px rgba(0,0,0,.7);
 }
 .hero-clip video { width: 100%; height: 100%; object-fit: cover; display: block; }
 
@@ -145,7 +163,7 @@ img { max-width: 100%; display: block; }
   .hero-media .btn { padding: .65rem 1.1rem; font-size: .95rem; }
 }
 @media (min-width: 821px) and (max-height: 760px) {
-  .hero-logo { width: 84px; margin-bottom: .6rem; }
+  .hero-logo { width: 64px; margin-bottom: .5rem; }
   .hero-media h1 { font-size: clamp(2.1rem, 4.2vw, 3.1rem); margin-bottom: .9rem; }
   .hero-media p.lead { font-size: 1.05rem; margin-bottom: 1.4rem; }
 }
@@ -163,29 +181,35 @@ img { max-width: 100%; display: block; }
 .photo-band .photo::after { content: ""; position: absolute; inset: 0; background: linear-gradient(180deg, transparent 55%, rgba(11,15,23,.85)); }
 .photo-band span {
   position: absolute; left: 1.25rem; bottom: 1rem; z-index: 1;
-  font-family: var(--mono); font-size: .8rem; letter-spacing: .15em; text-transform: uppercase; color: #fff;
+  font-size: .8rem; font-weight: 600; letter-spacing: .16em; text-transform: uppercase; color: #fff;
 }
 @media (max-width: 640px) { .photo-band { grid-template-columns: 1fr; } }
 
 /* ---------- Bölümler ---------- */
 section { padding: 4.5rem 0; }
 section + section { border-top: 1px solid var(--line); }
-.section-title { font-size: 1.9rem; margin: 0 0 .5rem; letter-spacing: -.01em; }
-.section-sub { color: var(--muted); margin: 0 0 2.5rem; max-width: 62ch; }
+.section-title { position: relative; padding-top: 20px; font-size: clamp(1.8rem, 3vw, 2.2rem); margin: 0 0 .5rem; }
+.section-title::before { /* başlık üstündeki kısa kırmızı çizgi */
+  content: ""; position: absolute; top: 0; left: 0; width: 28px; height: 3px; border-radius: 2px; background: var(--accent);
+}
+.section-sub { color: var(--muted); font-size: 1.02rem; margin: 0 0 2.5rem; max-width: 62ch; }
 
 .grid { display: grid; gap: 1.25rem; }
 .grid-2 { grid-template-columns: repeat(auto-fit, minmax(min(100%, 420px), 1fr)); }
 .grid-3 { grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); }
 
 .card {
-  background: var(--card); border: 1px solid var(--line); border-radius: var(--radius);
+  background: linear-gradient(180deg, rgba(255,255,255,.03), rgba(255,255,255,0) 60%), var(--card);
+  border: 1px solid rgba(255, 255, 255, .07); border-radius: var(--radius);
   padding: 1.5rem;
 }
 .card h3 { margin: 0 0 .5rem; font-size: 1.15rem; }
-.card p { margin: 0; color: var(--muted); }
-.card .icon { font-size: 1.6rem; margin-bottom: .75rem; }
+.card p { margin: 0; color: var(--muted); font-size: .96rem; line-height: 1.65; }
+.card .icon { /* 01, 02, 03… numaraları */
+  font-size: .75rem; font-weight: 700; letter-spacing: .12em; color: var(--accent-2); margin-bottom: 1rem;
+}
 a.card { text-decoration: none; transition: border-color .15s, transform .15s; }
-a.card:hover { border-color: var(--accent); transform: translateY(-2px); }
+a.card:hover { border-color: rgba(227, 38, 47, .5); transform: translateY(-2px); }
 
 .stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 1rem; }
 .stat { padding: 1.25rem; border-left: 3px solid var(--accent); background: var(--bg-2); border-radius: 0 var(--radius) var(--radius) 0; }
@@ -217,7 +241,8 @@ a.card:hover { border-color: var(--accent); transform: translateY(-2px); }
 /* ---------- Yarışmalar ---------- */
 .season + .season { margin-top: 3rem; }
 .season-head { display: flex; align-items: center; gap: .75rem; margin-bottom: 1.25rem; }
-.season-head .section-title { margin: 0; }
+.season-head .section-title { margin: 0; padding-top: 0; }
+.season-head .section-title::before { display: none; } /* yıl başlıkları etiketle aynı satırda */
 .comp-card {
   font: inherit; color: inherit; text-align: left; cursor: pointer; width: 100%;
   display: flex; flex-direction: column; gap: .6rem;
