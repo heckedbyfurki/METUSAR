@@ -18,8 +18,8 @@
   --accent-2: #ff7a3d;    /* motor alevi turuncusu */
   --radius: 10px;
   --max: 1120px;
-  --font: "Manrope", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
-  --display: "Sora", var(--font);  /* başlıklar */
+  --font: "Instrument Sans", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;  /* gövde: Archivo ile aynı grotesk kökten */
+  --display: "Archivo", var(--font);  /* başlıklar: logonun ailesi, yassılaşmayacak kadar az genişletilmiş (font-stretch 108%) */
   --logo: "Archivo", var(--font);   /* logodaki METUSAR'ın fontu; font-stretch: 125% ile — sadece küçük etiketlerde */
   --mono: "JetBrains Mono", ui-monospace, Menlo, monospace;
 }
@@ -35,8 +35,8 @@ body {
   letter-spacing: .005em;
   -webkit-font-smoothing: antialiased;
 }
-h1, h2, h3, h4 { font-family: var(--display); font-weight: 700; letter-spacing: -.03em; }
-h3, h4 { font-weight: 600; letter-spacing: -.015em; }
+h1, h2, h3, h4 { font-family: var(--display); font-stretch: 108%; font-weight: 700; letter-spacing: -.015em; }
+h3, h4 { font-weight: 600; letter-spacing: -.005em; }
 button { font-family: inherit; }
 a { color: inherit; }
 img { max-width: 100%; display: block; }
@@ -55,9 +55,10 @@ img { max-width: 100%; display: block; }
 .brand-mark { width: 34px; height: 34px; object-fit: contain; }
 .brand-word { height: 22px; width: auto; } /* logo-dark-bg.svg içindeki yazının kendisi */
 .nav-links { display: flex; gap: .25rem; list-style: none; margin: 0; padding: 0; }
-.nav-links a {
-  display: block; position: relative; padding: .5rem .85rem;
-  text-decoration: none; color: var(--muted); font-size: .9rem; font-weight: 500;
+.nav-links a { /* logonun fontu, büyük harf; tek satırda kalır */
+  display: block; position: relative; padding: .5rem .85rem; white-space: nowrap;
+  text-decoration: none; color: var(--muted);
+  font-family: var(--logo); font-stretch: 125%; font-size: .68rem; font-weight: 600; letter-spacing: .12em; text-transform: uppercase;
   transition: color .15s;
 }
 .nav-links a:hover, .nav-links a.active { color: var(--text); }
@@ -67,7 +68,14 @@ img { max-width: 100%; display: block; }
 }
 .nav-toggle { display: none; background: none; border: 1px solid var(--line); color: var(--text); border-radius: 8px; padding: .4rem .6rem; font-size: 1.1rem; cursor: pointer; }
 
-@media (max-width: 820px) {
+/* Geniş menü logoyla yan yana ~1015px'te sığar: 1060px (66.25em) altında sıkıştırılır, 960px (60em) altında açılır menü.
+   Tek taraflı ve em tabanlı: kesirli genişliklerde arada boşluk kalmaz, tarayıcı yazı boyutu büyütülse de çakışmaz */
+@media (max-width: 66.25em) {
+  .nav-links { gap: 0; }
+  .nav-links a { padding: .5rem .55rem; font-size: .64rem; letter-spacing: .08em; }
+  .nav-links a.active::after { left: .55rem; right: .55rem; }
+}
+@media (max-width: 60em) {
   .nav-toggle { display: block; }
   .nav-links {
     position: absolute; top: 68px; left: 0; right: 0; flex-direction: column;
@@ -75,6 +83,7 @@ img { max-width: 100%; display: block; }
     display: none;
   }
   .nav-links.open { display: flex; }
+  .nav-links a { padding: .7rem .55rem; font-size: .72rem; letter-spacing: .12em; } /* açılır menüde daha büyük dokunma alanı */
 }
 
 /* ---------- Hero ---------- */
@@ -99,7 +108,7 @@ img { max-width: 100%; display: block; }
 }
 .hero .container { position: relative; }
 .eyebrow { font-family: var(--logo); font-stretch: 125%; font-size: .72rem; font-weight: 800; letter-spacing: .14em; text-transform: uppercase; color: var(--accent); margin: 0 0 1rem; }
-.hero h1 { font-size: clamp(2.4rem, 6vw, 4.4rem); line-height: 1.08; margin: 0 0 1.25rem; max-width: 14ch; }
+.hero h1 { font-size: clamp(2.4rem, 6vw, 4.4rem); line-height: 1.08; margin: 0 0 1.25rem; max-width: 16ch; }
 /* METU | SKY OF ANATOLIA ROCKET
    METU: ana logonun fontu (Archivo Expanded Black). Logoda M ve U olmadığı için görselden alınamıyor.
    SKY OF ANATOLIA ROCKET: logonun alt satırının kendisi (logo-tagline.svg, S-A-R kırmızı).
