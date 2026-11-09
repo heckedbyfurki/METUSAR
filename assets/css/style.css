@@ -9,12 +9,18 @@
   --line: #243046;
   --text: #e7ecf3;
   --muted: #9aa6b8;
-  --accent: #e3262f;      /* ODTÜ kırmızısı */
+  /* Kırmızılar: logonun kırmızısı #cc0001 yalnızca logo dosyalarında. Arayüzde ondan türetilen iki ton:
+     --accent: yazı ve çizgiler (logo kırmızısına yakın, pembeye kaçmayan ton; koyu zeminde kontrast 3.6:1)
+     --accent-fill: butonlar ve rozetler gibi dolu alanlar (büyük alanda bağırmaz) */
+  --accent: #d21818;
+  --accent-fill: #ba0609;
+  --accent-fill-hover: #cc0001;
   --accent-2: #ff7a3d;    /* motor alevi turuncusu */
   --radius: 10px;
   --max: 1120px;
   --font: "Manrope", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
   --display: "Sora", var(--font);  /* başlıklar */
+  --logo: "Archivo", var(--font);   /* logodaki METUSAR'ın fontu; font-stretch: 125% ile — sadece küçük etiketlerde */
   --mono: "JetBrains Mono", ui-monospace, Menlo, monospace;
 }
 
@@ -47,7 +53,7 @@ img { max-width: 100%; display: block; }
 .nav { display: flex; align-items: center; justify-content: space-between; height: 68px; }
 .brand { display: flex; align-items: center; gap: .6rem; text-decoration: none; font-weight: 800; letter-spacing: .08em; }
 .brand-mark { width: 34px; height: 34px; object-fit: contain; }
-.brand span { color: var(--accent); }
+.brand-word { height: 22px; width: auto; } /* logo-dark-bg.svg içindeki yazının kendisi */
 .nav-links { display: flex; gap: .25rem; list-style: none; margin: 0; padding: 0; }
 .nav-links a {
   display: block; position: relative; padding: .5rem .85rem;
@@ -76,7 +82,7 @@ img { max-width: 100%; display: block; }
   position: relative; overflow: hidden;
   padding: 7rem 0 6rem;
   background:
-    radial-gradient(1200px 500px at 80% -10%, rgba(227, 38, 47, .25), transparent 60%),
+    radial-gradient(1200px 500px at 80% -10%, rgba(204, 0, 1, .25), transparent 60%),
     radial-gradient(800px 400px at 0% 100%, rgba(255, 122, 61, .12), transparent 60%),
     var(--bg);
 }
@@ -92,16 +98,20 @@ img { max-width: 100%; display: block; }
     radial-gradient(1.5px 1.5px at 92% 88%, #fff, transparent);
 }
 .hero .container { position: relative; }
-.eyebrow { font-size: .75rem; font-weight: 600; letter-spacing: .16em; text-transform: uppercase; color: var(--accent-2); margin: 0 0 1rem; }
+.eyebrow { font-family: var(--logo); font-stretch: 125%; font-size: .72rem; font-weight: 800; letter-spacing: .14em; text-transform: uppercase; color: var(--accent); margin: 0 0 1rem; }
 .hero h1 { font-size: clamp(2.4rem, 6vw, 4.4rem); line-height: 1.08; margin: 0 0 1.25rem; max-width: 14ch; }
-/* METU | Sky of Anatolia Rocket — logodaki gibi METU beyaz, S-A-R kırmızı */
-.eyebrow.acronym { color: var(--muted); }
-.eyebrow.acronym .org { color: var(--text); font-weight: 700; }
+/* METU | SKY OF ANATOLIA ROCKET
+   METU: ana logonun fontu (Archivo Expanded Black). Logoda M ve U olmadığı için görselden alınamıyor.
+   SKY OF ANATOLIA ROCKET: logonun alt satırının kendisi (logo-tagline.svg, S-A-R kırmızı).
+   Görselin genişliği em ile verildi: harfleri METU'nun büyük harf yüksekliğiyle (≈0.70em) aynı boyda çıkar */
+.eyebrow.acronym { font-stretch: 125%; font-size: min(12px, (100vw - 2.5rem) / 31); /* dar telefonda tek satıra sığsın */
+  white-space: nowrap; font-weight: 900; letter-spacing: .06em; }
+.eyebrow.acronym .org { color: var(--accent); font-size: 1.25em; } /* kalın METU, ince ve geniş logo yazısının yanında optik olarak dengelensin */
 .eyebrow.acronym .sep {
   display: inline-block; width: 1px; height: 11px; vertical-align: -1px;
-  margin: 0 12px 0 calc(12px - .16em); background: rgba(255, 255, 255, .25);
+  margin: 0 12px 0 calc(12px - .06em); background: rgba(255, 255, 255, .25);
 }
-.eyebrow.acronym b { color: var(--accent); font-weight: 700; }
+.eyebrow.acronym .tagline { display: inline-block; width: 23.08em; height: auto; vertical-align: -.03em; }
 .hero p.lead { font-size: 1.075rem; line-height: 1.7; color: #b3bdcc; max-width: 46ch; margin: 0 0 2rem; }
 .btn-row { display: flex; gap: .75rem; flex-wrap: wrap; }
 .btn {
@@ -111,15 +121,16 @@ img { max-width: 100%; display: block; }
 }
 .btn:hover { transform: translateY(-1px); }
 .btn:active { transform: translateY(1px); }
-.btn-primary { background: var(--accent); border-color: var(--accent); color: #fff; }
-.btn-primary:hover { background: #c81e26; border-color: #c81e26; }
+.btn-primary { background: var(--accent-fill); border-color: var(--accent-fill); color: #fff; }
+.btn-primary:hover { background: var(--accent-fill-hover); border-color: var(--accent-fill-hover); }
 .btn-ghost { background: transparent; border-color: rgba(255, 255, 255, .18); }
 .btn-ghost:hover { background: rgba(255, 255, 255, .04); border-color: rgba(255, 255, 255, .45); }
 
 .page-hero { padding: 4.5rem 0 3rem; border-bottom: 1px solid var(--line);
-  background: radial-gradient(900px 300px at 90% 0%, rgba(227, 38, 47, .18), transparent 60%), var(--bg); }
+  background: radial-gradient(900px 300px at 90% 0%, rgba(204, 0, 1, .18), transparent 60%), var(--bg); }
 .page-hero h1 { font-size: clamp(2rem, 4.5vw, 3rem); margin: 0 0 .5rem; }
 .page-hero p { color: var(--muted); margin: 0; max-width: 60ch; font-size: 1.1rem; }
+.page-hero .eyebrow { font-size: .72rem; color: var(--accent); margin: 0 0 1rem; } /* yukarıdaki kural etiketi ezmesin */
 
 /* ---------- Ana sayfa: arka plan videosu + logo ---------- */
 /* Bilgisayarda giriş alanı tam bir ekran boyunda: sayfa en üstteyken video baştan sona görünür */
@@ -138,13 +149,12 @@ img { max-width: 100%; display: block; }
 .hero-media::before { z-index: 0; }
 .hero-media .container { z-index: 1; }
 .hero-grid { display: grid; grid-template-columns: 1fr auto; align-items: center; gap: 3rem; }
-.hero-logo { display: block; width: 72px; height: auto; margin: 0 0 .5rem; }
+.hero-logo { display: block; width: 72px; height: auto; margin: 0 0 .9rem; } /* yazısız amblem; imza satırı hemen altındaki etiket */
 .hero-media h1 { font-size: clamp(2.4rem, 4.6vw, 3.4rem); }
 .hero-clip {
   height: min(calc(var(--hero-h) - 3rem), 820px); width: auto; aspect-ratio: 478 / 850;
-  border-radius: 12px; overflow: hidden; background: #000;
-  border: 1px solid rgba(255,255,255,.08);
-  box-shadow: 0 40px 80px -30px rgba(0,0,0,.7);
+  border-radius: 12px; overflow: hidden;
+  box-shadow: 0 30px 70px -25px rgba(0,0,0,.6);
 }
 .hero-clip video { width: 100%; height: 100%; object-fit: cover; display: block; }
 
@@ -163,7 +173,7 @@ img { max-width: 100%; display: block; }
   .hero-media .btn { padding: .65rem 1.1rem; font-size: .95rem; }
 }
 @media (min-width: 821px) and (max-height: 760px) {
-  .hero-logo { width: 64px; margin-bottom: .5rem; }
+  .hero-logo { width: 64px; margin-bottom: .75rem; }
   .hero-media h1 { font-size: clamp(2.1rem, 4.2vw, 3.1rem); margin-bottom: .9rem; }
   .hero-media p.lead { font-size: 1.05rem; margin-bottom: 1.4rem; }
 }
@@ -173,17 +183,18 @@ img { max-width: 100%; display: block; }
 @media (prefers-reduced-motion: reduce) { .hero-video, .hero-clip video { display: none; } }
 
 /* Atış fotoğrafları bandı */
+/* İki fotoğraf aynı boyutta kare kutularda; dikey olan, roket ve alevin çoğu görünecek şekilde konumlanır */
 .photo-band { padding: 0; display: grid; grid-template-columns: 1fr 1fr; gap: 2px; background: var(--line); }
 .photo-band .photo {
-  position: relative; min-height: clamp(260px, 42vw, 520px);
+  position: relative; min-height: min(50vw, 900px); /* yaklaşık kare */
   background: #111827 center/cover no-repeat;
 }
-.photo-band .photo::after { content: ""; position: absolute; inset: 0; background: linear-gradient(180deg, transparent 55%, rgba(11,15,23,.85)); }
+.photo-band .photo::after { content: ""; position: absolute; inset: 0; background: linear-gradient(180deg, transparent 72%, rgba(11,15,23,.8)); } /* yalnızca alt yazı şeridini koyulaştırır, alevi değil */
 .photo-band span {
   position: absolute; left: 1.25rem; bottom: 1rem; z-index: 1;
-  font-size: .8rem; font-weight: 600; letter-spacing: .16em; text-transform: uppercase; color: #fff;
+  font-family: var(--logo); font-stretch: 125%; font-size: .78rem; font-weight: 800; letter-spacing: .14em; text-transform: uppercase; color: #fff;
 }
-@media (max-width: 640px) { .photo-band { grid-template-columns: 1fr; } }
+@media (max-width: 640px) { .photo-band { grid-template-columns: 1fr; } .photo-band .photo { min-height: 100vw; } }
 
 /* ---------- Bölümler ---------- */
 section { padding: 4.5rem 0; }
@@ -206,10 +217,10 @@ section + section { border-top: 1px solid var(--line); }
 .card h3 { margin: 0 0 .5rem; font-size: 1.15rem; }
 .card p { margin: 0; color: var(--muted); font-size: .96rem; line-height: 1.65; }
 .card .icon { /* 01, 02, 03… numaraları */
-  font-size: .75rem; font-weight: 700; letter-spacing: .12em; color: var(--accent-2); margin-bottom: 1rem;
+  font-family: var(--logo); font-stretch: 125%; font-size: .78rem; font-weight: 900; letter-spacing: .1em; color: var(--accent); margin-bottom: 1rem;
 }
 a.card { text-decoration: none; transition: border-color .15s, transform .15s; }
-a.card:hover { border-color: rgba(227, 38, 47, .5); transform: translateY(-2px); }
+a.card:hover { border-color: rgba(210, 24, 24, .5); transform: translateY(-2px); }
 
 .stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 1rem; }
 .stat { padding: 1.25rem; border-left: 3px solid var(--accent); background: var(--bg-2); border-radius: 0 var(--radius) var(--radius) 0; }
@@ -220,7 +231,7 @@ a.card:hover { border-color: rgba(227, 38, 47, .5); transform: translateY(-2px);
   display: inline-block; font-family: var(--mono); font-size: .72rem; letter-spacing: .05em;
   padding: .2rem .55rem; border-radius: 6px; background: var(--bg-2); border: 1px solid var(--line); color: var(--muted);
 }
-.tag.red { color: #fff; background: var(--accent); border-color: var(--accent); }
+.tag.red { color: #fff; background: var(--accent-fill); border-color: var(--accent-fill); }
 .tag.orange { color: var(--accent-2); border-color: rgba(255,122,61,.5); }
 
 /* Doldurulması gereken yer tutucular — içerik girildikçe silinir */
@@ -229,12 +240,12 @@ a.card:hover { border-color: rgba(227, 38, 47, .5); transform: translateY(-2px);
 /* ---------- Zaman çizelgesi ---------- */
 .timeline { position: relative; margin: 0; padding: 0 0 0 2rem; list-style: none; }
 .timeline::before { content: ""; position: absolute; left: .45rem; top: .4rem; bottom: .4rem; width: 2px; background: var(--line); }
-.timeline li { position: relative; margin-bottom: 1.5rem; }
-.timeline li::before {
+.timeline > li { position: relative; margin-bottom: 1.5rem; }
+.timeline > li::before { /* yalnızca ana maddeler; kart içindeki listeler etkilenmesin */
   content: ""; position: absolute; left: -1.85rem; top: 1.65rem; width: 14px; height: 14px; border-radius: 50%;
   background: var(--bg); border: 3px solid var(--accent);
 }
-.timeline li.future::before { border-color: var(--muted); border-style: dashed; }
+.timeline > li.future::before { border-color: var(--muted); border-style: dashed; }
 .timeline .meta { display: flex; gap: .5rem; flex-wrap: wrap; align-items: center; margin-bottom: .5rem; }
 .timeline ul { margin: .75rem 0 0; padding-left: 1.1rem; color: var(--muted); }
 
@@ -301,7 +312,7 @@ a.card:hover { border-color: rgba(227, 38, 47, .5); transform: translateY(-2px);
   background: var(--bg-2); color: var(--muted);
 }
 .filter-btn.active, .filter-btn:hover { color: #fff; border-color: var(--accent); }
-.filter-btn.active { background: var(--accent); }
+.filter-btn.active { background: var(--accent-fill); }
 .search {
   width: 100%; max-width: 360px; font: inherit; padding: .65rem 1rem; border-radius: 999px;
   border: 1px solid var(--line); background: var(--bg-2); color: var(--text); margin-bottom: 1rem;
@@ -309,7 +320,7 @@ a.card:hover { border-color: rgba(227, 38, 47, .5); transform: translateY(-2px);
 .video-card { padding: 0; overflow: hidden; display: flex; flex-direction: column; }
 .video-thumb { aspect-ratio: 16/9; background: #000 center/cover no-repeat; position: relative; display: grid; place-items: center; }
 .video-thumb.empty { background: linear-gradient(135deg, #1a2235, #0f1522); }
-.video-thumb .play { width: 54px; height: 54px; border-radius: 50%; background: rgba(227,38,47,.9); display: grid; place-items: center; font-size: 1.2rem; color: #fff; }
+.video-thumb .play { width: 54px; height: 54px; border-radius: 50%; background: rgba(186, 6, 9, .9); display: grid; place-items: center; font-size: 1.2rem; color: #fff; }
 .video-body { padding: 1.1rem 1.25rem 1.3rem; display: flex; flex-direction: column; gap: .5rem; flex: 1; }
 .video-body h3 { margin: 0; font-size: 1.05rem; }
 .video-body p { margin: 0; color: var(--muted); font-size: .92rem; }

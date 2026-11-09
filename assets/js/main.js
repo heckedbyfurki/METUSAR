@@ -26,7 +26,7 @@ function renderHeader() {
   el.className = "site-header";
   el.innerHTML = `
     <nav class="container nav">
-      <a class="brand" href="index.html">${LOGO}<b>METU<span>SAR</span></b></a>
+      <a class="brand" href="index.html">${LOGO}<img class="brand-word" src="assets/img/logo-wordmark.svg" alt="METUSAR — Sky of Anatolia Rocket" width="141" height="22"></a>
       <button class="nav-toggle" aria-label="Menüyü aç" aria-expanded="false">☰</button>
       <ul class="nav-links">${links}</ul>
     </nav>`;
@@ -79,3 +79,16 @@ document.querySelectorAll(".photo-band").forEach((band) => {
     img.src = url;
   });
 });
+
+// Ana sayfa: öndeki net video, arkadaki bulanık videoyla aynı karede oynasın.
+// Arkadaki "ana saat": telefonda öndeki gizli olduğu için tarayıcı onu durdurabilir.
+const bgVideo = document.querySelector(".hero-video");
+const fgVideo = document.querySelector(".hero-clip video");
+if (bgVideo && fgVideo) {
+  const sync = () => {
+    if (Math.abs(fgVideo.currentTime - bgVideo.currentTime) > 0.15) fgVideo.currentTime = bgVideo.currentTime;
+    if (bgVideo.paused && !fgVideo.paused) fgVideo.pause();
+    else if (!bgVideo.paused && fgVideo.paused) fgVideo.play().catch(() => {});
+  };
+  ["play", "pause", "seeked", "timeupdate"].forEach((ev) => bgVideo.addEventListener(ev, sync));
+}
