@@ -13,6 +13,8 @@
      highlight : true → sonuç kırmızı etiketle vurgulanır (derece aldığımız yarışmalar)
      summary   : kısa açıklama (boş bırakılabilir)
      team      : yarışmaya katılanlar → { name: "Ad Soyad", role: "Görev" }
+     model     : (isteğe bağlı) roketin 3D modeli → { src: "assets/models/dosya.glb", alt: "kısa açıklama" }
+                 SolidWorks'ten "glTF/GLB" olarak dışa aktarılan dosya; 5 MB altında tutun.
      documents : ilgili dosyalar → { title: "...", type: "STEP" | "Kod" | "PCB" | "Rapor" | "Sunum" | "Diğer", link: "..." }
                  link: Google Drive / GitHub / site içi dosya adresi
    ========================================================== */
@@ -39,6 +41,10 @@ const COMPETITIONS = [
     result: "3.lük",
     highlight: true,
     summary: "",
+    model: {
+      src: "assets/models/zorlu-2026.glb",
+      alt: "2026 Zorlu Görev iki kademeli roketimizin 3D modeli",
+    },
     team: [],
     documents: [],
   },
@@ -104,6 +110,7 @@ const COMPETITIONS = [
         </div>
         <h3>${esc(c.category)}</h3>
         ${c.summary ? `<p>${esc(c.summary)}</p>` : ""}
+        ${c.model ? `<span class="comp-3d">3D model</span>` : ""}
         <span class="comp-more">Ayrıntılar →</span>
       </button>`;
   }
@@ -159,6 +166,18 @@ const COMPETITIONS = [
         <div><dt>Sonuç</dt><dd>${c.upcoming ? SOON : esc(c.result)}</dd></div>
       </dl>
       ${c.summary ? `<p class="comp-summary">${esc(c.summary)}</p>` : ""}
+      ${c.model ? `
+      <h3>Roketimiz</h3>
+      <div class="model-box">
+        <model-viewer src="${esc(c.model.src)}" alt="${esc(c.model.alt || "Roketin 3D modeli")}"
+          camera-controls touch-action="pan-y" interaction-prompt="none"
+          camera-orbit="90deg 78deg auto" min-camera-orbit="auto auto 0%" field-of-view="24deg"
+          environment-image="neutral" exposure="1.05" shadow-intensity="0"
+          loading="eager" reveal="auto">
+          <div class="model-loading" slot="poster">3D model yükleniyor…</div>
+        </model-viewer>
+        <p class="model-hint">Döndürmek için sürükleyin · yakınlaştırmak için kaydırın veya iki parmakla açın</p>
+      </div>` : ""}
       <h3>Takım</h3>
       ${team}
       <h3>Dokümanlar</h3>
@@ -167,9 +186,21 @@ const COMPETITIONS = [
 
   const dlg = document.getElementById("competition-dialog");
 
+  // 3D görüntüleyici (Google model-viewer) yalnızca modeli olan bir pencere açılınca yüklenir
+  let mvLoaded = false;
+  function loadModelViewer() {
+    if (mvLoaded) return;
+    mvLoaded = true;
+    const sc = document.createElement("script");
+    sc.type = "module";
+    sc.src = "https://ajax.googleapis.com/ajax/libs/model-viewer/4.0.0/model-viewer.min.js";
+    document.head.appendChild(sc);
+  }
+
   function open(id, push = true) {
     const c = COMPETITIONS.find((x) => x.id === id);
     if (!c || !dlg) return;
+    if (c.model) loadModelViewer();
     dlg.querySelector(".comp-dialog-body").innerHTML = detail(c);
     if (!dlg.open) dlg.showModal();
     if (push && location.hash !== "#" + id) history.replaceState(null, "", "#" + id);
