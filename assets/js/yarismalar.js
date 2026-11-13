@@ -85,7 +85,23 @@ const COMPETITIONS = [
     result: "Finalist",
     highlight: true,
     summary: "",
-    team: [],
+    team: [
+      { name: "Ali Demir", role: "Takım Kaptanı", group: "Yönetim", school: "Orta Doğu Teknik Üniversitesi", department: "Makine Mühendisliği" },
+      { name: "Mehmet Burak Memiş", role: "Takım Danışmanı", group: "Yönetim", school: "Orta Doğu Teknik Üniversitesi", department: "Makine Mühendisliği" },
+
+      { name: "Ali Demir", group: "Aerodinamik", lead: true, school: "Orta Doğu Teknik Üniversitesi", department: "Makine Mühendisliği" },
+      { name: "Ahmet Çevik", group: "Aerodinamik", school: "Orta Doğu Teknik Üniversitesi", department: "Havacılık ve Uzay Mühendisliği" },
+
+      { name: "İlay Arpacıoğlu", group: "Mekanik", school: "Orta Doğu Teknik Üniversitesi", department: "Makine Mühendisliği" },
+      { name: "Burak Aktaş", group: "Mekanik", school: "Orta Doğu Teknik Üniversitesi", department: "Makine Mühendisliği" },
+
+      { name: "Emin Haktan Sağbaş", group: "Aviyonik", lead: true, school: "Orta Doğu Teknik Üniversitesi", department: "Elektrik ve Elektronik Mühendisliği" },
+      { name: "Furkan Bıkmaz", group: "Aviyonik", school: "Orta Doğu Teknik Üniversitesi", department: "Elektrik ve Elektronik Mühendisliği" },
+      { name: "Batuhan Ataç", group: "Aviyonik", school: "Orta Doğu Teknik Üniversitesi", department: "Elektrik ve Elektronik Mühendisliği" },
+
+      { name: "Mustafa Sarıoğlu", group: "Kurtarma", lead: true, school: "Orta Doğu Teknik Üniversitesi", department: "Makine Mühendisliği" },
+      { name: "Cem Atilla Elbir", group: "Kurtarma", school: "Orta Doğu Teknik Üniversitesi", department: "Makine Mühendisliği" },
+    ],
     documents: [],
   },
   {
@@ -209,7 +225,7 @@ const COMPETITIONS = [
     });
     const mgmt = groups.find((g) => g.name === "Yönetim");
     const teams = groups.filter((g) => g !== mgmt);
-    const total = list.length;
+    const total = new Set(list.map((m) => m.name)).size; // aynı kişi iki görevde olabilir
     const hasSchool = list.some((m) => m.school);
     // okul bilgisi varsa isim tıklanabilir bir düğme olur, tıklayınca okul/bölüm açılır
     const person = (m, extra, cls) => {

@@ -328,7 +328,10 @@ a.card:hover { border-color: rgba(210, 24, 24, .5); transform: translateY(-2px);
 .team-top { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: .5rem; margin-bottom: .75rem; }
 .team-person { background: var(--bg-2); border-radius: 10px; padding: .75rem .95rem; display: flex; flex-direction: column; gap: .15rem; border-left: 3px solid var(--accent-fill); }
 .team-person span { color: var(--muted); font-size: .85rem; }
-.team-groups { display: grid; grid-template-columns: repeat(auto-fit, minmax(170px, 1fr)); gap: .6rem; }
+.comp-dialog-body { container-type: inline-size; }
+.team-groups { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: .6rem; } /* dar pencerede 2×2 */
+@container (min-width: 700px) { .team-groups { grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); } }
+@container (max-width: 380px) { .team-groups { grid-template-columns: 1fr; } }
 .team-group { background: var(--bg-2); border: 1px solid var(--line); border-radius: 12px; padding: .8rem .9rem; }
 .team-group-head { display: flex; justify-content: space-between; align-items: baseline; gap: .5rem; padding-bottom: .55rem; margin-bottom: .55rem; border-bottom: 1px solid var(--line); }
 .team-group-head h4 { margin: 0; font-size: .95rem; }
