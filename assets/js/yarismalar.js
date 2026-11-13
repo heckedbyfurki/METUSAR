@@ -187,7 +187,7 @@ const COMPETITIONS = [
           <div class="model-loading" slot="poster">3D model yükleniyor…</div>
         </model-viewer>
         <div class="model-bar">
-          ${c.model.shell ? `<button type="button" class="btn btn-ghost model-xray" data-shell="${esc(c.model.shell)}" aria-pressed="false" disabled>İç yapıyı göster</button>` : ""}
+          ${c.model.shell ? `<button type="button" class="btn btn-primary model-xray" data-shell="${esc(c.model.shell)}" aria-pressed="false" disabled>İç yapıyı göster</button>` : ""}
           <p class="model-hint">Döndürmek için sürükleyin · yakınlaştırmak için kaydırın veya iki parmakla açın</p>
         </div>
       </div>` : ""}
