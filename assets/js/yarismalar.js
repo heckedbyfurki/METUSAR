@@ -119,22 +119,22 @@ const COMPETITIONS = [
       { name: "Yrd. Doç. Dr. Süleyman Yıldırım", role: "Takım Danışmanı", group: "Yönetim" },
 
       { name: "Fahreddin Şengül", group: "Aerodinamik", lead: true },
-      { name: "Mehmet Onur Yavuz", group: "Aerodinamik" },
-      { name: "Mert Deniz", group: "Aerodinamik" },
+      { name: "Mehmet Onur Yavuz", group: "Aerodinamik", school: "Orta Doğu Teknik Üniversitesi", department: "Makine Mühendisliği" },
+      { name: "Mert Deniz", group: "Aerodinamik", school: "Orta Doğu Teknik Üniversitesi", department: "Makine Mühendisliği" },
 
       { name: "Mehmet Burak Memiş", group: "Yapısal", lead: true },
-      { name: "Muhammed Sami Yurtseven", group: "Yapısal" },
+      { name: "Muhammed Sami Yurtseven", group: "Yapısal", school: "Gazi Üniversitesi", department: "Tıp Fakültesi" },
       { name: "Cem Atilla Elbir", group: "Yapısal" },
-      { name: "Yusuf Tosun", group: "Yapısal" },
+      { name: "Yusuf Tosun", group: "Yapısal", school: "Orta Doğu Teknik Üniversitesi", department: "Metalurji ve Malzeme Mühendisliği" },
       { name: "Muhammed Ramis Cantepe", group: "Yapısal" },
 
       { name: "Hüseyin Ünal", group: "Aviyonik", lead: true },
-      { name: "Ali Furkan Güler", group: "Aviyonik" },
-      { name: "Kerem Soylu", group: "Aviyonik" },
+      { name: "Ali Furkan Güler", group: "Aviyonik", school: "Orta Doğu Teknik Üniversitesi", department: "Elektrik ve Elektronik Mühendisliği" },
+      { name: "Kerem Soylu", group: "Aviyonik", school: "Orta Doğu Teknik Üniversitesi", department: "Elektrik ve Elektronik Mühendisliği" },
       { name: "Osman Özer", group: "Aviyonik" },
 
       { name: "Mehmet Arda Türk", group: "Kurtarma", lead: true },
-      { name: "Buğra Aydoğdu", group: "Kurtarma" },
+      { name: "Buğra Aydoğdu", group: "Kurtarma", school: "Orta Doğu Teknik Üniversitesi", department: "Makine Mühendisliği" },
     ],
     documents: [
       {
