@@ -13,7 +13,8 @@
      highlight : true → sonuç kırmızı etiketle vurgulanır (derece aldığımız yarışmalar)
      summary   : kısa açıklama (boş bırakılabilir)
      team      : yarışmaya katılanlar → { name: "Ad Soyad", role: "Görev" }
-     model     : (isteğe bağlı) roketin 3D modeli → { src: "assets/models/dosya.glb", alt: "kısa açıklama" }
+     model     : (isteğe bağlı) roketin 3D modeli → { src: "assets/models/dosya.glb", alt: "kısa açıklama", shell: "dis-govde" }
+                 shell: dış gövdenin malzeme adı; verilirse "İç yapıyı göster" butonu çıkar ve gövde saydamlaşır
                  SolidWorks'ten "glTF/GLB" olarak dışa aktarılan dosya; 5 MB altında tutun.
      documents : ilgili dosyalar → { title: "...", type: "STEP" | "Kod" | "PCB" | "Rapor" | "Sunum" | "Diğer", link: "..." }
                  link: Google Drive / GitHub / site içi dosya adresi
@@ -42,8 +43,9 @@ const COMPETITIONS = [
     highlight: true,
     summary: "",
     model: {
-      src: "assets/models/zorlu-2026.glb",
+      src: "assets/models/zorlu-2026.glb?v=2",
       alt: "2026 Zorlu Görev iki kademeli roketimizin 3D modeli",
+      shell: "dis-govde",
     },
     team: [],
     documents: [],
@@ -176,7 +178,10 @@ const COMPETITIONS = [
           loading="eager" reveal="auto">
           <div class="model-loading" slot="poster">3D model yükleniyor…</div>
         </model-viewer>
-        <p class="model-hint">Döndürmek için sürükleyin · yakınlaştırmak için kaydırın veya iki parmakla açın</p>
+        <div class="model-bar">
+          ${c.model.shell ? `<button type="button" class="btn btn-ghost model-xray" data-shell="${esc(c.model.shell)}" aria-pressed="false" disabled>İç yapıyı göster</button>` : ""}
+          <p class="model-hint">Döndürmek için sürükleyin · yakınlaştırmak için kaydırın veya iki parmakla açın</p>
+        </div>
       </div>` : ""}
       <h3>Takım</h3>
       ${team}
@@ -197,11 +202,36 @@ const COMPETITIONS = [
     document.head.appendChild(sc);
   }
 
+  // "İç yapıyı göster": dış gövde malzemesini yarı saydam yapar / geri alır
+  function setupModel(root) {
+    const mv = root.querySelector("model-viewer");
+    const btn = root.querySelector(".model-xray");
+    if (!mv || !btn) return;
+    const enable = () => { btn.disabled = false; };
+    if (mv.loaded) enable(); else mv.addEventListener("load", enable, { once: true });
+    btn.addEventListener("click", () => {
+      const name = btn.dataset.shell;
+      const mats = (mv.model && mv.model.materials) || [];
+      const shell = mats.filter((m) => m.name === name);
+      if (!shell.length) return;
+      const on = btn.getAttribute("aria-pressed") !== "true";
+      shell.forEach((m) => {
+        m.setAlphaMode(on ? "BLEND" : "OPAQUE");
+        const f = m.pbrMetallicRoughness.baseColorFactor.slice();
+        f[3] = on ? 0.15 : 1;
+        m.pbrMetallicRoughness.setBaseColorFactor(f);
+      });
+      btn.setAttribute("aria-pressed", String(on));
+      btn.textContent = on ? "Dış gövdeyi göster" : "İç yapıyı göster";
+    });
+  }
+
   function open(id, push = true) {
     const c = COMPETITIONS.find((x) => x.id === id);
     if (!c || !dlg) return;
     if (c.model) loadModelViewer();
     dlg.querySelector(".comp-dialog-body").innerHTML = detail(c);
+    if (c.model) setupModel(dlg);
     if (!dlg.open) dlg.showModal();
     if (push && location.hash !== "#" + id) history.replaceState(null, "", "#" + id);
   }

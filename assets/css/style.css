@@ -303,13 +303,18 @@ a.card:hover { border-color: rgba(210, 24, 24, .5); transform: translateY(-2px);
 .comp-dialog:has(.model-box) { width: min(820px, calc(100% - 2rem)); }
 .model-box { margin: 0; }
 .model-box model-viewer {
-  display: block; width: 100%; height: clamp(240px, 38vh, 360px);
+  display: block; position: relative; width: 100%; height: clamp(240px, 38vh, 360px);
   border-radius: 12px; border: 1px solid var(--line);
   background: radial-gradient(ellipse at 50% 45%, #1d2638 0%, #0e131d 75%);
   --poster-color: transparent;
 }
 .model-loading { position: absolute; inset: 0; display: grid; place-items: center; color: var(--muted); font-size: .9rem; }
-.model-hint { margin: .5rem 0 0; color: var(--muted); font-size: .8rem; text-align: center; }
+.model-bar { display: flex; align-items: center; justify-content: space-between; gap: .75rem 1rem; flex-wrap: wrap; margin-top: .65rem; }
+.model-hint { margin: 0; color: var(--muted); font-size: .8rem; }
+.model-xray { padding: .45rem .9rem; font-size: .88rem; }
+.model-xray[aria-pressed="true"] { border-color: var(--accent); color: var(--text); }
+.model-xray:disabled { opacity: .5; cursor: progress; }
+@media (max-width: 560px) { .model-box model-viewer { height: 230px; } }
 .comp-3d { align-self: flex-start; font-size: .72rem; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); border: 1px solid var(--line); border-radius: 6px; padding: .15rem .5rem; }
 .comp-summary { color: var(--muted); margin: 1rem 0 0; }
 .comp-dialog h3 { margin: 1.6rem 0 .6rem; font-size: 1rem; text-transform: uppercase; letter-spacing: .08em; color: var(--muted); }
