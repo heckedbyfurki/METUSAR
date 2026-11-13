@@ -84,7 +84,7 @@ const COMPETITIONS = [
     highlight: true,
     summary: "Takımımızın ilk yarışması. 25 finalist takım arasında 3. olduk.",
     model: {
-      src: "assets/models/orta-irtifa-2025.glb",
+      src: "assets/models/orta-irtifa-2025.glb?v=2",
       alt: "2025 Orta İrtifa roketimizin 3D modeli",
       shell: "dis-govde",
       orbit: "0deg 78deg auto",
