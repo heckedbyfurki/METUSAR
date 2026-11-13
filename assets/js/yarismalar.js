@@ -15,6 +15,7 @@
      team      : yarışmaya katılanlar → { name: "Ad Soyad", role: "Görev" }
      model     : (isteğe bağlı) roketin 3D modeli → { src: "assets/models/dosya.glb", alt: "kısa açıklama", shell: "dis-govde" }
                  shell: dış gövdenin malzeme adı; verilirse "İç yapıyı göster" butonu çıkar ve gövde saydamlaşır
+                 orbit: (isteğe bağlı) başlangıç bakış açısı, ör. "90deg 78deg auto" — roket yatay görünecek şekilde
                  SolidWorks'ten "glTF/GLB" olarak dışa aktarılan dosya; 5 MB altında tutun.
      documents : ilgili dosyalar → { title: "...", type: "STEP" | "Kod" | "PCB" | "Rapor" | "Sunum" | "Diğer", link: "..." }
                  link: Google Drive / GitHub / site içi dosya adresi
@@ -46,6 +47,7 @@ const COMPETITIONS = [
       src: "assets/models/zorlu-2026.glb?v=2",
       alt: "2026 Zorlu Görev iki kademeli roketimizin 3D modeli",
       shell: "dis-govde",
+      orbit: "90deg 78deg auto",
     },
     team: [],
     documents: [],
@@ -81,6 +83,12 @@ const COMPETITIONS = [
     result: "3.lük",
     highlight: true,
     summary: "Takımımızın ilk yarışması. 25 finalist takım arasında 3. olduk.",
+    model: {
+      src: "assets/models/orta-irtifa-2025.glb",
+      alt: "2025 Orta İrtifa roketimizin 3D modeli",
+      shell: "dis-govde",
+      orbit: "0deg 78deg auto",
+    },
     team: [],
     documents: [
       {
@@ -173,7 +181,7 @@ const COMPETITIONS = [
       <div class="model-box">
         <model-viewer src="${esc(c.model.src)}" alt="${esc(c.model.alt || "Roketin 3D modeli")}"
           camera-controls touch-action="pan-y" interaction-prompt="none"
-          camera-orbit="90deg 78deg auto" min-camera-orbit="auto auto 0%" field-of-view="24deg"
+          camera-orbit="${esc(c.model.orbit || "90deg 78deg auto")}" min-camera-orbit="auto auto 0%" field-of-view="24deg"
           environment-image="neutral" exposure="1.05" shadow-intensity="0"
           loading="eager" reveal="auto">
           <div class="model-loading" slot="poster">3D model yükleniyor…</div>
