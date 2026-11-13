@@ -12,7 +12,10 @@
      result    : sonuç (ör. "3.lük", "Finalist", "ÖTR aşaması")
      highlight : true → sonuç kırmızı etiketle vurgulanır (derece aldığımız yarışmalar)
      summary   : kısa açıklama (boş bırakılabilir)
-     team      : yarışmaya katılanlar → { name: "Ad Soyad", role: "Görev" }
+     team      : yarışmaya katılanlar → { name: "Ad Soyad", role: "Görev", group: "Alt ekip", lead: true }
+                 group: aynı alt ekipteki kişiler tek kartta toplanır ("Yönetim" en üstte gösterilir)
+                 lead : true → o alt ekibin kaptanı (kartın başında, vurgulu)
+                 group verilmezse kişiler düz liste olarak gösterilir
      model     : (isteğe bağlı) roketin 3D modeli → { src: "assets/models/dosya.glb", alt: "kısa açıklama", shell: "dis-govde" }
                  shell: dış gövdenin malzeme adı; verilirse "İç yapıyı göster" butonu çıkar ve gövde saydamlaşır
                  orbit: (isteğe bağlı) başlangıç bakış açısı, ör. "90deg 78deg auto" — roket yatay görünecek şekilde
@@ -89,7 +92,28 @@ const COMPETITIONS = [
       shell: "dis-govde",
       orbit: "0deg 78deg auto",
     },
-    team: [],
+    team: [
+      { name: "Mehmet Bedil Şahin", role: "Baş Takım Kaptanı", group: "Yönetim" },
+      { name: "Yrd. Doç. Dr. Süleyman Yıldırım", role: "Takım Danışmanı", group: "Yönetim" },
+
+      { name: "Fahreddin Şengül", group: "Aerodinamik", lead: true },
+      { name: "Mehmet Onur Yavuz", group: "Aerodinamik" },
+      { name: "Mert Deniz", group: "Aerodinamik" },
+
+      { name: "Mehmet Burak Memiş", group: "Yapısal", lead: true },
+      { name: "Muhammed Sami Yurtseven", group: "Yapısal" },
+      { name: "Cem Atilla Elbir", group: "Yapısal" },
+      { name: "Yusuf Tosun", group: "Yapısal" },
+      { name: "Muhammed Ramis Cantepe", group: "Yapısal" },
+
+      { name: "Hüseyin Ünal", group: "Aviyonik", lead: true },
+      { name: "Ali Furkan Güler", group: "Aviyonik" },
+      { name: "Kerem Soylu", group: "Aviyonik" },
+      { name: "Osman Özer", group: "Aviyonik" },
+
+      { name: "Mehmet Arda Türk", group: "Kurtarma", lead: true },
+      { name: "Buğra Aydoğdu", group: "Kurtarma" },
+    ],
     documents: [
       {
         title: "Yarışma Süreci Özet ve Değerlendirme Raporu",
@@ -149,10 +173,41 @@ const COMPETITIONS = [
 
   const empty = (t) => `<p class="empty-note">${t}</p>`;
 
+  // Takım: gruplu (Yönetim + alt ekip kartları) veya düz liste
+  function teamHtml(list) {
+    if (!list.some((m) => m.group)) {
+      return `<ul class="team-list">${list.map((m) => `<li><b>${esc(m.name)}</b>${m.role ? `<span>${esc(m.role)}</span>` : ""}</li>`).join("")}</ul>`;
+    }
+    const groups = [];
+    list.forEach((m) => {
+      const g = m.group || "Diğer";
+      let e = groups.find((x) => x.name === g);
+      if (!e) groups.push((e = { name: g, people: [] }));
+      e.people.push(m);
+    });
+    const mgmt = groups.find((g) => g.name === "Yönetim");
+    const teams = groups.filter((g) => g !== mgmt);
+    const total = list.length;
+    const top = mgmt
+      ? `<div class="team-top">${mgmt.people.map((m) => `
+          <div class="team-person lead"><b>${esc(m.name)}</b>${m.role ? `<span>${esc(m.role)}</span>` : ""}</div>`).join("")}
+        </div>`
+      : "";
+    const cards = teams.map((g) => {
+      const people = [...g.people].sort((a, b) => (b.lead ? 1 : 0) - (a.lead ? 1 : 0));
+      return `
+        <div class="team-group">
+          <div class="team-group-head"><h4>${esc(g.name)}</h4><span>${g.people.length} kişi</span></div>
+          <ul>${people.map((m) => `
+            <li class="${m.lead ? "lead" : ""}"><b>${esc(m.name)}</b>${m.lead ? `<span class="tag red">Ekip Kaptanı</span>` : m.role ? `<span>${esc(m.role)}</span>` : ""}</li>`).join("")}
+          </ul>
+        </div>`;
+    }).join("");
+    return `<p class="team-count">${total} kişilik ekip · ${teams.length} alt ekip</p>${top}<div class="team-groups">${cards}</div>`;
+  }
+
   function detail(c) {
-    const team = c.team.length
-      ? `<ul class="team-list">${c.team.map((m) => `<li><b>${esc(m.name)}</b>${m.role ? `<span>${esc(m.role)}</span>` : ""}</li>`).join("")}</ul>`
-      : empty("Katılımcı listesi yakında eklenecek.");
+    const team = c.team.length ? teamHtml(c.team) : empty("Katılımcı listesi yakında eklenecek.");
     const docs = c.documents.length
       ? `<ul class="doc-list">${c.documents.map((d) => {
           const icon = DOC_ICON[d.type] || DOC_ICON["Diğer"];
