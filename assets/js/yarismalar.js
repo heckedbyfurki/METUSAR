@@ -15,6 +15,7 @@
      team      : yarışmaya katılanlar → { name: "Ad Soyad", role: "Görev", group: "Alt ekip", lead: true }
                  group: aynı alt ekipteki kişiler tek kartta toplanır ("Yönetim" en üstte gösterilir)
                  lead : true → o alt ekibin kaptanı (kartın başında, vurgulu)
+                 school / department: (isteğe bağlı) isme tıklayınca açılan okul ve bölüm bilgisi
                  group verilmezse kişiler düz liste olarak gösterilir
      model     : (isteğe bağlı) roketin 3D modeli → { src: "assets/models/dosya.glb", alt: "kısa açıklama", shell: "dis-govde" }
                  shell: dış gövdenin malzeme adı; verilirse "İç yapıyı göster" butonu çıkar ve gövde saydamlaşır
@@ -52,7 +53,28 @@ const COMPETITIONS = [
       shell: "dis-govde",
       orbit: "90deg 78deg auto",
     },
-    team: [],
+    team: [
+      { name: "Ali Furkan Güler", role: "Baş Takım Kaptanı", group: "Yönetim", school: "Orta Doğu Teknik Üniversitesi", department: "Elektrik ve Elektronik Mühendisliği" },
+      { name: "Dr. Öğr. Üyesi Mehmet Karaca", role: "Takım Danışmanı", group: "Yönetim" },
+
+      { name: "Mert Deniz", group: "Aerodinamik", lead: true, school: "Orta Doğu Teknik Üniversitesi", department: "Makine Mühendisliği" },
+      { name: "İbrahim Yusuf Budunoğlu", group: "Aerodinamik", school: "Orta Doğu Teknik Üniversitesi", department: "Makine Mühendisliği" },
+
+      { name: "Buğra Bulut Doğan", group: "Yapısal", lead: true, school: "Gazi Üniversitesi", department: "Makine Mühendisliği" },
+      { name: "Atik Faysal Fardin", group: "Yapısal", school: "Orta Doğu Teknik Üniversitesi", department: "Metalurji ve Malzeme Mühendisliği" },
+      { name: "Muhammed Sami Yurtseven", group: "Yapısal", school: "Gazi Üniversitesi", department: "Tıp Fakültesi" },
+      { name: "Yusuf Tosun", group: "Yapısal", school: "Orta Doğu Teknik Üniversitesi", department: "Metalurji ve Malzeme Mühendisliği" },
+      { name: "Emre Yılmaz", group: "Yapısal", school: "Gazi Üniversitesi", department: "Makine Mühendisliği" },
+      { name: "Mehmet Onur Yavuz", group: "Yapısal", school: "Orta Doğu Teknik Üniversitesi", department: "Makine Mühendisliği" },
+
+      { name: "Kerem Soylu", group: "Aviyonik", lead: true, school: "Orta Doğu Teknik Üniversitesi", department: "Elektrik ve Elektronik Mühendisliği" },
+      { name: "Berkay Eldemir", group: "Aviyonik", school: "Orta Doğu Teknik Üniversitesi", department: "Bilgisayar Mühendisliği" },
+      { name: "Fevzi Beren Geneci", group: "Aviyonik", school: "Orta Doğu Teknik Üniversitesi", department: "Elektrik ve Elektronik Mühendisliği" },
+      { name: "Yunus Emre Gebeş", group: "Aviyonik", school: "Orta Doğu Teknik Üniversitesi", department: "Fizik Bölümü" },
+
+      { name: "Buğra Aydoğdu", group: "Kurtarma", lead: true, school: "Orta Doğu Teknik Üniversitesi", department: "Makine Mühendisliği" },
+      { name: "Mehmet Akif Sonay", group: "Kurtarma", school: "Orta Doğu Teknik Üniversitesi", department: "Makine Mühendisliği" },
+    ],
     documents: [],
   },
   {
@@ -188,9 +210,17 @@ const COMPETITIONS = [
     const mgmt = groups.find((g) => g.name === "Yönetim");
     const teams = groups.filter((g) => g !== mgmt);
     const total = list.length;
+    const hasSchool = list.some((m) => m.school);
+    // okul bilgisi varsa isim tıklanabilir bir düğme olur, tıklayınca okul/bölüm açılır
+    const person = (m, extra, cls) => {
+      const inner = `<b>${esc(m.name)}</b>${extra}`;
+      if (!m.school) return `<div class="${cls}">${inner}</div>`;
+      return `<button type="button" class="${cls} person-btn" aria-expanded="false">${inner}
+        <span class="person-school" hidden><span>${esc(m.school)}</span>${m.department ? `<span>${esc(m.department)}</span>` : ""}</span></button>`;
+    };
     const top = mgmt
-      ? `<div class="team-top">${mgmt.people.map((m) => `
-          <div class="team-person lead"><b>${esc(m.name)}</b>${m.role ? `<span>${esc(m.role)}</span>` : ""}</div>`).join("")}
+      ? `<div class="team-top">${mgmt.people.map((m) =>
+          person(m, m.role ? `<span class="person-role">${esc(m.role)}</span>` : "", "team-person lead")).join("")}
         </div>`
       : "";
     const cards = teams.map((g) => {
@@ -199,11 +229,11 @@ const COMPETITIONS = [
         <div class="team-group">
           <div class="team-group-head"><h4>${esc(g.name)}</h4><span>${g.people.length} kişi</span></div>
           <ul>${people.map((m) => `
-            <li class="${m.lead ? "lead" : ""}"><b>${esc(m.name)}</b>${m.lead ? `<span class="tag red">Ekip Kaptanı</span>` : m.role ? `<span>${esc(m.role)}</span>` : ""}</li>`).join("")}
+            <li class="${m.lead ? "lead" : ""}">${person(m, m.lead ? `<span class="tag red">Ekip Kaptanı</span>` : m.role ? `<span class="person-role">${esc(m.role)}</span>` : "", "team-member")}</li>`).join("")}
           </ul>
         </div>`;
     }).join("");
-    return `<p class="team-count">${total} kişilik ekip · ${teams.length} alt ekip</p>${top}<div class="team-groups">${cards}</div>`;
+    return `<p class="team-count">${total} kişilik ekip · ${teams.length} alt ekip${hasSchool ? ` · <span class="team-hint">okul bilgisi için isme tıklayın</span>` : ""}</p>${top}<div class="team-groups">${cards}</div>`;
   }
 
   function detail(c) {
@@ -303,6 +333,15 @@ const COMPETITIONS = [
   }
 
   if (dlg) {
+    dlg.addEventListener("click", (e) => {
+      const pb = e.target.closest(".person-btn");
+      if (pb) {
+        const open = pb.getAttribute("aria-expanded") !== "true";
+        pb.setAttribute("aria-expanded", String(open));
+        pb.querySelector(".person-school").hidden = !open;
+        return;
+      }
+    });
     dlg.addEventListener("click", (e) => {
       if (e.target === dlg || e.target.closest(".dialog-close")) close();
     });
