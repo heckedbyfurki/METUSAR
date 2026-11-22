@@ -63,10 +63,10 @@ const COMPETITIONS = [
     gallery: {
       dir: "assets/img/yarisma_galerisi/2026_teknofest_zorlu_gorev/",
       photos: [
-        "2026_09_11_ROKET_YARISMASI_5.GUN_EG_30567.JPG",
+        "2026_09_11_ROKET_YARISMASI_5.GUN_EG_30567.jpg",
         "b3393afa-1cda-4b02-be71-1b86cd484923.jpg",
         "b7b36bcb-697b-4751-8010-cd09abd2f3d5.jpg",
-        "RHPF1087.JPG",
+        "RHPF1087.jpg",
         "WhatsApp Image 2026-09-11 at 15.25.09.jpeg",
         "WhatsApp Image 2026-09-14 at 17.46.57.jpeg",
         "WhatsApp Image 2026-09-14 at 17.48.22.jpeg",
