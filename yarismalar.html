@@ -7,7 +7,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@500&family=Archivo:wdth,wght@108,600;108,700;125,600;125,800;125,900&display=swap" rel="stylesheet">
   <link rel="icon" type="image/png" href="assets/img/logo-mark.png">
-  <link rel="stylesheet" href="assets/css/style.css?v=20261113k">
+  <link rel="stylesheet" href="assets/css/style.css?v=20261122a">
 </head>
 <body>
   <header id="site-header"></header>
@@ -22,7 +22,7 @@
     </div>
 
     <!-- Yarışmalar assets/js/yarismalar.js dosyasındaki listeden oluşturulur.
-         Yeni yarışma, katılımcı veya doküman eklemek için o dosyayı düzenleyin. -->
+         Yeni yarışma, katılımcı, doküman veya fotoğraf eklemek için o dosyayı düzenleyin. -->
     <section>
       <div class="container" id="competition-list"></div>
     </section>
@@ -30,10 +30,23 @@
     <dialog id="competition-dialog" class="comp-dialog" aria-label="Yarışma bilgileri">
       <div class="comp-dialog-body"></div>
     </dialog>
+
+    <!-- Galeriden seçilen fotoğraf burada büyük gösterilir (ok tuşlarıyla gezinilir) -->
+    <dialog id="photo-lightbox" class="photo-lightbox" aria-label="Yarışma fotoğrafı">
+      <div class="lb-head">
+        <span class="lb-count" aria-live="polite"></span>
+        <button type="button" class="dialog-close lb-close" aria-label="Kapat">✕</button>
+      </div>
+      <div class="lb-stage">
+        <img alt="">
+        <button type="button" class="lb-nav lb-prev" aria-label="Önceki fotoğraf">‹</button>
+        <button type="button" class="lb-nav lb-next" aria-label="Sonraki fotoğraf">›</button>
+      </div>
+    </dialog>
   </main>
 
   <footer id="site-footer"></footer>
   <script src="assets/js/main.js?v=20261109c"></script>
-  <script src="assets/js/yarismalar.js?v=20261113k"></script>
+  <script src="assets/js/yarismalar.js?v=20261122a"></script>
 </body>
 </html>

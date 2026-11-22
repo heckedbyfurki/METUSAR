@@ -23,6 +23,9 @@
                  SolidWorks'ten "glTF/GLB" olarak dışa aktarılan dosya; 5 MB altında tutun.
      documents : ilgili dosyalar → { title: "...", type: "STEP" | "Kod" | "PCB" | "Rapor" | "Sunum" | "Diğer", link: "..." }
                  link: Google Drive / GitHub / site içi dosya adresi
+     gallery   : (isteğe bağlı) yarışma fotoğrafları → { dir: "assets/img/yarisma_galerisi/2026_teknofest_zorlu_gorev/", photos: ["foto1.jpg", "foto2.jpg"] }
+                 Fotoğraflar assets/img/yarisma_galerisi altındaki yarışma klasörüne konur; dosya adları buraya sırayla yazılır.
+                 photos boşsa bölüm "Fotoğraflar yakında eklenecek" notuyla görünür.
    ========================================================== */
 const COMPETITIONS = [
   /* ---------- Önümüzdeki sezon ---------- */
@@ -34,6 +37,10 @@ const COMPETITIONS = [
     category: "Zorlu Görev",
     result: "",
     summary: "",
+    gallery: {
+      dir: "assets/img/yarisma_galerisi/2027_teknofest_zorlu_gorev/",
+      photos: [],
+    },
     team: [],
     documents: [],
   },
@@ -52,6 +59,18 @@ const COMPETITIONS = [
       alt: "2026 Zorlu Görev iki kademeli roketimizin 3D modeli",
       shell: "dis-govde",
       orbit: "90deg 78deg auto",
+    },
+    gallery: {
+      dir: "assets/img/yarisma_galerisi/2026_teknofest_zorlu_gorev/",
+      photos: [
+        "2026_09_11_ROKET_YARISMASI_5.GUN_EG_30567.JPG",
+        "b3393afa-1cda-4b02-be71-1b86cd484923.jpg",
+        "b7b36bcb-697b-4751-8010-cd09abd2f3d5.jpg",
+        "RHPF1087.JPG",
+        "WhatsApp Image 2026-09-11 at 15.25.09.jpeg",
+        "WhatsApp Image 2026-09-14 at 17.46.57.jpeg",
+        "WhatsApp Image 2026-09-14 at 17.48.22.jpeg",
+      ],
     },
     team: [
       { name: "Ali Furkan Güler", role: "Baş Takım Kaptanı", group: "Yönetim", school: "Orta Doğu Teknik Üniversitesi", department: "Elektrik ve Elektronik Mühendisliği" },
@@ -85,6 +104,10 @@ const COMPETITIONS = [
     result: "Finalist",
     highlight: true,
     summary: "",
+    gallery: {
+      dir: "assets/img/yarisma_galerisi/2026_teknofest_yuksek_irtifa/",
+      photos: [],
+    },
     team: [
       { name: "Ali Demir", role: "Takım Kaptanı", group: "Yönetim", school: "Orta Doğu Teknik Üniversitesi", department: "Makine Mühendisliği" },
       { name: "Mehmet Burak Memiş", role: "Takım Danışmanı", group: "Yönetim", school: "Orta Doğu Teknik Üniversitesi", department: "Makine Mühendisliği" },
@@ -111,6 +134,10 @@ const COMPETITIONS = [
     category: "Orta İrtifa",
     result: "ÖTR aşaması",
     summary: "",
+    gallery: {
+      dir: "assets/img/yarisma_galerisi/2026_teknofest_orta_irtifa/",
+      photos: [],
+    },
     team: [],
     documents: [],
   },
@@ -129,6 +156,10 @@ const COMPETITIONS = [
       alt: "2025 Orta İrtifa roketimizin 3D modeli",
       shell: "dis-govde",
       orbit: "0deg 78deg auto",
+    },
+    gallery: {
+      dir: "assets/img/yarisma_galerisi/2025_teknofest_orta_irtifa/",
+      photos: [],
     },
     team: [
       { name: "Mehmet Bedil Şahin", role: "Baş Takım Kaptanı", group: "Yönetim", school: "Orta Doğu Teknik Üniversitesi", department: "Makine Mühendisliği" },
@@ -211,6 +242,27 @@ const COMPETITIONS = [
 
   const empty = (t) => `<p class="empty-note">${t}</p>`;
 
+  /* ---------- Yarışma galerisi ----------
+     Fotoğraflar assets/img/yarisma_galerisi/<yarışma klasörü>/ içinde durur; dosya adları
+     COMPETITIONS içindeki gallery.photos listesinde sırayla yazılır (tarayıcı klasörün
+     içeriğini kendiliğinden okuyamaz, bu yüzden liste burada tutulur). */
+  const photoSrc = (c, file) => encodeURI((c.gallery.dir || "") + file);
+  const photoAlt = (c, i) => `${c.category} ${c.season} yarışma fotoğrafı ${i + 1}`;
+
+  function galleryHtml(c) {
+    if (!c.gallery) return "";
+    const photos = c.gallery.photos || [];
+    const body = photos.length
+      ? `<div class="comp-gallery">${photos.map((file, i) => `
+          <button type="button" class="gal-item" data-index="${i}" aria-label="${esc(photoAlt(c, i))} — büyüt">
+            <img src="${esc(photoSrc(c, file))}" alt="${esc(photoAlt(c, i))}" loading="lazy" decoding="async">
+          </button>`).join("")}
+        </div>
+        <p class="gal-hint">Fotoğrafı büyütmek için üzerine tıklayın.</p>`
+      : empty("Yarışma fotoğrafları yakında eklenecek.");
+    return `<h3>Yarışma Galerisi</h3>${body}`;
+  }
+
   // Takım: gruplu (Yönetim + alt ekip kartları) veya düz liste
   function teamHtml(list) {
     if (!list.some((m) => m.group)) {
@@ -292,6 +344,7 @@ const COMPETITIONS = [
           <p class="model-hint">Döndürmek için sürükleyin · yakınlaştırmak için kaydırın veya iki parmakla açın</p>
         </div>
       </div>` : ""}
+      ${galleryHtml(c)}
       <h3>Takım</h3>
       ${team}
       <h3>Dokümanlar</h3>
@@ -299,6 +352,31 @@ const COMPETITIONS = [
   }
 
   const dlg = document.getElementById("competition-dialog");
+  const lb = document.getElementById("photo-lightbox");
+
+  // Açık yarışmanın fotoğrafları — galeride bir fotoğrafa tıklanınca büyütmede kullanılır
+  let galPhotos = [];
+  let galIndex = 0;
+
+  function showPhoto(i) {
+    if (!lb || !galPhotos.length) return;
+    galIndex = (i + galPhotos.length) % galPhotos.length; // baştan sona, sondan başa sarar
+    const photo = galPhotos[galIndex];
+    const img = lb.querySelector(".lb-stage img");
+    if (img) {
+      img.src = photo.src;
+      img.alt = photo.alt;
+    }
+    const count = lb.querySelector(".lb-count");
+    if (count) count.textContent = `${galIndex + 1} / ${galPhotos.length}`;
+    lb.querySelectorAll(".lb-nav").forEach((btn) => { btn.hidden = galPhotos.length < 2; });
+  }
+
+  function openLightbox(i) {
+    if (!lb) return;
+    showPhoto(i);
+    if (!lb.open) lb.showModal();
+  }
 
   // 3D görüntüleyici (Google model-viewer) yalnızca modeli olan bir pencere açılınca yüklenir
   let mvLoaded = false;
@@ -340,6 +418,11 @@ const COMPETITIONS = [
     if (!c || !dlg) return;
     if (c.model) loadModelViewer();
     dlg.querySelector(".comp-dialog-body").innerHTML = detail(c);
+    galPhotos = c.gallery
+      ? (c.gallery.photos || []).map((file, i) => ({ src: photoSrc(c, file), alt: photoAlt(c, i) }))
+      : [];
+    galIndex = 0;
+    if (lb && lb.open) lb.close();
     if (c.model) setupModel(dlg);
     if (!dlg.open) dlg.showModal();
     if (push && location.hash !== "#" + id) history.replaceState(null, "", "#" + id);
@@ -359,10 +442,34 @@ const COMPETITIONS = [
       }
     });
     dlg.addEventListener("click", (e) => {
+      const item = e.target.closest(".gal-item");
+      if (item) openLightbox(Number(item.dataset.index) || 0);
+    });
+    dlg.addEventListener("click", (e) => {
       if (e.target === dlg || e.target.closest(".dialog-close")) close();
     });
     dlg.addEventListener("close", () => {
+      if (lb && lb.open) lb.close();
       if (location.hash) history.replaceState(null, "", location.pathname + location.search);
+    });
+  }
+
+  // Büyütülmüş fotoğraf: kapat, önceki/sonraki ve klavye okları
+  if (lb) {
+    lb.addEventListener("click", (e) => {
+      if (e.target === lb || e.target.closest(".lb-close")) lb.close();
+      else if (e.target.closest(".lb-prev")) showPhoto(galIndex - 1);
+      else if (e.target.closest(".lb-next")) showPhoto(galIndex + 1);
+    });
+    lb.addEventListener("keydown", (e) => {
+      if (!galPhotos.length) return;
+      if (e.key === "ArrowLeft") {
+        e.preventDefault();
+        showPhoto(galIndex - 1);
+      } else if (e.key === "ArrowRight") {
+        e.preventDefault();
+        showPhoto(galIndex + 1);
+      }
     });
   }
 
